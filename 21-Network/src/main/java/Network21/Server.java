@@ -18,7 +18,7 @@ public class Server{
     private static boolean gameStarted = false;
 
     static Deck deck;
-
+    private static Timer roundTimer;
 
     public static void main (String [] args) throws IOException{
 
@@ -118,6 +118,7 @@ public class Server{
          deck = new Deck();
         
         for (int i=0; i<5; i++){
+            
             for (ClientHandler client : waitingRoom){
                 System.out.println(client.getPlayerName() + " Round " + i);
                 client.sendMessage("Round " + (i+1));
@@ -125,6 +126,23 @@ public class Server{
                     client.sendMessage("Game done.");
                 }*/
             }
+            
+            roundTimer = new Timer();
+            roundTimer.scheduleAtFixedRate(new TimerTask(){
+                private int countdown = 10;                
+                @Override 
+                public void run(){
+                    if (countdown>0){
+                        broadcastRoundTimer(countdown);
+                        countdown--;
+                        
+                    } else {
+                        broadcastRoundTimer(countdown);
+                    }
+                }
+                
+                
+            },0,1000);
         }
         
         
@@ -148,6 +166,19 @@ public class Server{
     public static void endGame(){
         roomTimer = null;
         gameStarted = false;
+    }
+    
+    public static void broadcastRoundTimer(int countdown) {
+        String t;
+        if(countdown<=9){
+            t = "0"+countdown;
+        } else {
+            t = countdown + "";
+        }
+        String timeLeft = "Round00:" + t;
+        for (ClientHandler client : waitingRoom){
+            client.sendMessage(timeLeft);
+        }
     }
 
 }

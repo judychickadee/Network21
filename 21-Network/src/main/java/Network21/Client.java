@@ -87,10 +87,14 @@ public class Client extends javax.swing.JFrame {
 
         public void hit(){
             out.println("Hit");
+            HitButton.setEnabled(false);
+            PassButton.setEnabled(false);
             System.out.println("hit button clicked");
         }
         public void pass(){
             out.println("Pass");
+            HitButton.setEnabled(false);
+            PassButton.setEnabled(false);
             System.out.println("Pass button clicked");
         }
 
@@ -125,6 +129,8 @@ public class Client extends javax.swing.JFrame {
                                 ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
                                 ConnectionRoom.revalidate();
                         } else if(message.startsWith("Round ")){
+                            HitButton.setEnabled(true);
+                            PassButton.setEnabled(true);
                             RoundNumberLabel.setText("");
                             RoundNumberLabel.setText(message);
                             WaitingRoom.setVisible(false);
@@ -137,6 +143,11 @@ public class Client extends javax.swing.JFrame {
                         } else if(message.startsWith("Game done.")){
                             RoundPanel.setVisible(false);
                             LeaderBoardPanel.setVisible(true);
+                        } else if(message.startsWith("Round00:")){
+                            String timer = message.substring("Round".length());
+                            RoundTimerLabel.setText("");
+                            RoundTimerLabel.setText(timer);
+                        
                         }else {
                                 ConnectedPlayers.append(message + "\n");
                         }
@@ -153,23 +164,6 @@ public class Client extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        LeaderBoardPanel = new javax.swing.JPanel();
-        LeaderBoardLabel = new javax.swing.JLabel();
-        UsernamePanel = new javax.swing.JPanel();
-        GameName = new javax.swing.JLabel();
-        UsernamePrompt = new javax.swing.JLabel();
-        UsernameField = new javax.swing.JTextField();
-        ConnectButton = new javax.swing.JButton();
-        WaitingRoom = new javax.swing.JPanel();
-        WaitingRoomLabel = new javax.swing.JLabel();
-        Timer = new javax.swing.JLabel();
-        WaitingRoomPane = new javax.swing.JScrollPane();
-        WaitingPlayers = new javax.swing.JTextArea();
-        ConnectionRoom = new javax.swing.JPanel();
-        ConnectedRoomLabel = new javax.swing.JLabel();
-        ConnectedPlayerPane = new javax.swing.JScrollPane();
-        ConnectedPlayers = new javax.swing.JTextArea();
-        JoinButton = new javax.swing.JButton();
         RoundPanel = new javax.swing.JPanel();
         RoundNumberLabel = new javax.swing.JLabel();
         BackOfCardLabel = new javax.swing.JLabel();
@@ -181,110 +175,127 @@ public class Client extends javax.swing.JFrame {
         CurrentScoreBoardLabel = new javax.swing.JLabel();
         CurrentScoreboardPane = new javax.swing.JScrollPane();
         CurrentScoresText = new javax.swing.JTextArea();
+        RoundTimerLabel = new javax.swing.JLabel();
+        ConnectionRoom = new javax.swing.JPanel();
+        ConnectedRoomLabel = new javax.swing.JLabel();
+        ConnectedPlayerPane = new javax.swing.JScrollPane();
+        ConnectedPlayers = new javax.swing.JTextArea();
+        JoinButton = new javax.swing.JButton();
+        WaitingRoom = new javax.swing.JPanel();
+        WaitingRoomLabel = new javax.swing.JLabel();
+        Timer = new javax.swing.JLabel();
+        WaitingRoomPane = new javax.swing.JScrollPane();
+        WaitingPlayers = new javax.swing.JTextArea();
+        UsernamePanel = new javax.swing.JPanel();
+        GameName = new javax.swing.JLabel();
+        UsernamePrompt = new javax.swing.JLabel();
+        UsernameField = new javax.swing.JTextField();
+        ConnectButton = new javax.swing.JButton();
+        LeaderBoardPanel = new javax.swing.JPanel();
+        LeaderBoardLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("21");
         setResizable(false);
 
-        LeaderBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LeaderBoardLabel.setText("Winners");
+        RoundNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        RoundNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RoundNumberLabel.setText("Round");
 
-        javax.swing.GroupLayout LeaderBoardPanelLayout = new javax.swing.GroupLayout(LeaderBoardPanel);
-        LeaderBoardPanel.setLayout(LeaderBoardPanelLayout);
-        LeaderBoardPanelLayout.setHorizontalGroup(
-            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(LeaderBoardLabel)
-                .addContainerGap(323, Short.MAX_VALUE))
-        );
-        LeaderBoardPanelLayout.setVerticalGroup(
-            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(LeaderBoardLabel)
-                .addContainerGap(537, Short.MAX_VALUE))
-        );
+        BackOfCardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BackOfCardLabel.setText("Card");
+        BackOfCardLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        GameName.setFont(new java.awt.Font("Helvetica Neue", 2, 36)); // NOI18N
-        GameName.setText("21");
+        PassButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        PassButton.setText("Pass");
+        PassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassButtonActionPerformed(evt);
+            }
+        });
 
-        UsernamePrompt.setText("Please enter your username:");
+        HitButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        HitButton.setText("Hit");
 
-        ConnectButton.setText("Connect");
+        RoundDivider.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        javax.swing.GroupLayout UsernamePanelLayout = new javax.swing.GroupLayout(UsernamePanel);
-        UsernamePanel.setLayout(UsernamePanelLayout);
-        UsernamePanelLayout.setHorizontalGroup(
-            UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsernamePanelLayout.createSequentialGroup()
-                .addGroup(UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(UsernamePanelLayout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(UsernamePrompt))
-                    .addGroup(UsernamePanelLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(UsernamePanelLayout.createSequentialGroup()
-                        .addGap(305, 305, 305)
-                        .addComponent(GameName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(UsernamePanelLayout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(ConnectButton)))
-                .addContainerGap(234, Short.MAX_VALUE))
-        );
-        UsernamePanelLayout.setVerticalGroup(
-            UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsernamePanelLayout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(GameName, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(UsernamePrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        CurrentScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        CurrentScoreLabel.setText("Your Score:");
+
+        ScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        ScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ScoreLabel.setText("0");
+        ScoreLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        CurrentScoreBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        CurrentScoreBoardLabel.setText("Scoreboard:");
+
+        CurrentScoresText.setColumns(20);
+        CurrentScoresText.setRows(5);
+        CurrentScoreboardPane.setViewportView(CurrentScoresText);
+
+        RoundTimerLabel.setToolTipText("");
+
+        javax.swing.GroupLayout RoundPanelLayout = new javax.swing.GroupLayout(RoundPanel);
+        RoundPanel.setLayout(RoundPanelLayout);
+        RoundPanelLayout.setHorizontalGroup(
+            RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RoundPanelLayout.createSequentialGroup()
+                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RoundPanelLayout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(BackOfCardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RoundPanelLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RoundNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(RoundPanelLayout.createSequentialGroup()
+                                .addComponent(PassButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(HitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(RoundPanelLayout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(RoundTimerLabel)))
+                .addGap(100, 100, 100)
+                .addComponent(RoundDivider, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(ConnectButton)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CurrentScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CurrentScoreBoardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CurrentScoreboardPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        WaitingRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
-        WaitingRoomLabel.setText("Waiting Room");
-
-        WaitingPlayers.setEditable(false);
-        WaitingPlayers.setColumns(20);
-        WaitingPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        WaitingPlayers.setRows(5);
-        WaitingRoomPane.setViewportView(WaitingPlayers);
-
-        javax.swing.GroupLayout WaitingRoomLayout = new javax.swing.GroupLayout(WaitingRoom);
-        WaitingRoom.setLayout(WaitingRoomLayout);
-        WaitingRoomLayout.setHorizontalGroup(
-            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
-                .addGroup(WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
-                        .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(236, 236, 236))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
-                        .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(180, 180, 180))))
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        WaitingRoomLayout.setVerticalGroup(
-            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+        RoundPanelLayout.setVerticalGroup(
+            RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RoundPanelLayout.createSequentialGroup()
+                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RoundPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(RoundDivider))
+                    .addGroup(RoundPanelLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(RoundNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RoundTimerLabel)
+                        .addGap(24, 24, 24)
+                        .addComponent(BackOfCardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PassButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(HitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(RoundPanelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(CurrentScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(CurrentScoreBoardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addComponent(CurrentScoreboardPane, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         ConnectedRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
@@ -328,97 +339,105 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap(167, Short.MAX_VALUE))
         );
 
-        RoundNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        RoundNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        RoundNumberLabel.setText("Round");
+        WaitingRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
+        WaitingRoomLabel.setText("Waiting Room");
 
-        BackOfCardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BackOfCardLabel.setText("Card");
-        BackOfCardLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        WaitingPlayers.setEditable(false);
+        WaitingPlayers.setColumns(20);
+        WaitingPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        WaitingPlayers.setRows(5);
+        WaitingRoomPane.setViewportView(WaitingPlayers);
 
-        PassButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        PassButton.setText("Pass");
-        PassButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PassButtonActionPerformed(evt);
-            }
-        });
-
-        HitButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        HitButton.setText("Hit");
-
-        RoundDivider.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        CurrentScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        CurrentScoreLabel.setText("Your Score:");
-
-        ScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        ScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ScoreLabel.setText("Score");
-        ScoreLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        CurrentScoreBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        CurrentScoreBoardLabel.setText("Scoreboard:");
-
-        CurrentScoresText.setColumns(20);
-        CurrentScoresText.setRows(5);
-        CurrentScoreboardPane.setViewportView(CurrentScoresText);
-
-        javax.swing.GroupLayout RoundPanelLayout = new javax.swing.GroupLayout(RoundPanel);
-        RoundPanel.setLayout(RoundPanelLayout);
-        RoundPanelLayout.setHorizontalGroup(
-            RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RoundPanelLayout.createSequentialGroup()
-                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RoundPanelLayout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(BackOfCardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(RoundPanelLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RoundNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(RoundPanelLayout.createSequentialGroup()
-                                .addComponent(PassButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(HitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(78, 78, 78)
-                .addComponent(RoundDivider, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CurrentScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CurrentScoreBoardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CurrentScoreboardPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+        javax.swing.GroupLayout WaitingRoomLayout = new javax.swing.GroupLayout(WaitingRoom);
+        WaitingRoom.setLayout(WaitingRoomLayout);
+        WaitingRoomLayout.setHorizontalGroup(
+            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addGroup(WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
+                        .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(236, 236, 236))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
+                        .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(180, 180, 180))))
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        RoundPanelLayout.setVerticalGroup(
-            RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RoundPanelLayout.createSequentialGroup()
-                .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RoundPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(RoundDivider))
-                    .addGroup(RoundPanelLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(RoundNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(BackOfCardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addGroup(RoundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(PassButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(HitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(RoundPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(CurrentScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(CurrentScoreBoardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+        WaitingRoomLayout.setVerticalGroup(
+            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CurrentScoreboardPane, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(247, Short.MAX_VALUE))
+        );
+
+        GameName.setFont(new java.awt.Font("Helvetica Neue", 2, 36)); // NOI18N
+        GameName.setText("21");
+
+        UsernamePrompt.setText("Please enter your username:");
+
+        ConnectButton.setText("Connect");
+
+        javax.swing.GroupLayout UsernamePanelLayout = new javax.swing.GroupLayout(UsernamePanel);
+        UsernamePanel.setLayout(UsernamePanelLayout);
+        UsernamePanelLayout.setHorizontalGroup(
+            UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsernamePanelLayout.createSequentialGroup()
+                .addGroup(UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UsernamePanelLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(UsernamePrompt))
+                    .addGroup(UsernamePanelLayout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(UsernamePanelLayout.createSequentialGroup()
+                        .addGap(305, 305, 305)
+                        .addComponent(GameName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(UsernamePanelLayout.createSequentialGroup()
+                        .addGap(292, 292, 292)
+                        .addComponent(ConnectButton)))
+                .addContainerGap(234, Short.MAX_VALUE))
+        );
+        UsernamePanelLayout.setVerticalGroup(
+            UsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsernamePanelLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(GameName, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(UsernamePrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(ConnectButton)
+                .addContainerGap(337, Short.MAX_VALUE))
+        );
+
+        LeaderBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LeaderBoardLabel.setText("Winners");
+
+        javax.swing.GroupLayout LeaderBoardPanelLayout = new javax.swing.GroupLayout(LeaderBoardPanel);
+        LeaderBoardPanel.setLayout(LeaderBoardPanelLayout);
+        LeaderBoardPanelLayout.setHorizontalGroup(
+            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(LeaderBoardLabel)
+                .addContainerGap(327, Short.MAX_VALUE))
+        );
+        LeaderBoardPanelLayout.setVerticalGroup(
+            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(LeaderBoardLabel)
+                .addContainerGap(525, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -427,11 +446,12 @@ public class Client extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -441,21 +461,24 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -465,12 +488,12 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -536,6 +559,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JSeparator RoundDivider;
     private javax.swing.JLabel RoundNumberLabel;
     private javax.swing.JPanel RoundPanel;
+    private javax.swing.JLabel RoundTimerLabel;
     private javax.swing.JLabel ScoreLabel;
     private javax.swing.JLabel Timer;
     private javax.swing.JTextField UsernameField;
