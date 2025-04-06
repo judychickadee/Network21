@@ -121,9 +121,9 @@ public class Server{
             for (ClientHandler client : waitingRoom){
                 System.out.println(client.getPlayerName() + " Round " + i);
                 client.sendMessage("Round " + (i+1));
-                if (i==4){
+                /*if (i==4){
                     client.sendMessage("Game done.");
-                }
+                }*/
             }
         }
         

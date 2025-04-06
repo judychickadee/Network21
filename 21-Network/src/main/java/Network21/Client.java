@@ -131,8 +131,9 @@ public class Client extends javax.swing.JFrame {
                             RoundPanel.setVisible(true);
                             
                         } else if(message.startsWith("Score")){
+                            String score = message.substring("Score".length());
                             ScoreLabel.setText("");
-                            ScoreLabel.setText(message); 
+                            ScoreLabel.setText(score); 
                         } else if(message.startsWith("Game done.")){
                             RoundPanel.setVisible(false);
                             LeaderBoardPanel.setVisible(true);
