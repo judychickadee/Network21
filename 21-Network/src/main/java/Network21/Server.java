@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Server{
 
@@ -19,6 +20,9 @@ public class Server{
 
     static Deck deck;
     private static Timer roundTimer;
+    
+    // Scheduler 
+    private static final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     public static void main (String [] args) throws IOException{
 
@@ -107,8 +111,57 @@ public class Server{
     }
         return client.getPlayerName() + " joined.";
     }
+    
+    public static synchronized void startGame() {
+    if (gameStarted) {
+        System.out.println("already started");
+        return;
+    }
+    
+    gameStarted = true;
+    System.out.println("started");
+    
+    deck = new Deck();
+    
+    new Thread(() -> {
+        try {
+            for (int i = 0; i < 5; i++) {
+                startRound(i);
+                // Wait for round to complete
+                CountDownLatch latch = new CountDownLatch(1);
+                startCountdown(latch);
+                latch.await(); // Wait until countdown completes
+            }
+            endGame();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }).start();
+    
+}
+    
+    private static void startRound(int roundNumber) {
+    for (ClientHandler client : waitingRoom) {
+        System.out.println(client.getPlayerName() + " Round " + roundNumber);
+        client.sendMessage("Round " + (roundNumber + 1));
+    }
+}
 
-    public static synchronized void startGame(){
+private static void startCountdown(CountDownLatch latch) {
+    final int[] countdown = {10};
+    
+    executor.scheduleAtFixedRate(() -> {
+        if (countdown[0] > 0) {
+            broadcastRoundTimer(countdown[0]);
+            countdown[0]--;
+        } else {
+            broadcastRoundTimer(countdown[0]);
+            latch.countDown(); // Signal that countdown is complete
+        }
+    }, 0, 1, TimeUnit.SECONDS);
+}
+
+    /*public static synchronized void startGame(){
         if(gameStarted)  { 
         System.out.println("already started"); }
         else {
@@ -122,9 +175,9 @@ public class Server{
             for (ClientHandler client : waitingRoom){
                 System.out.println(client.getPlayerName() + " Round " + i);
                 client.sendMessage("Round " + (i+1));
-                /*if (i==4){
-                    client.sendMessage("Game done.");
-                }*/
+                //if (i==4){
+                    //client.sendMessage("Game done.");
+                //}
             }
             
             roundTimer = new Timer();
@@ -148,7 +201,7 @@ public class Server{
         
         
         endGame();
-    }
+    } */
 
     public static void broadcastTimer(int countdown) {
         String t;
@@ -162,8 +215,13 @@ public class Server{
             client.sendMessage(timeLeft);
         }
     }
-    
+
+
+
     public static void endGame(){
+        for (ClientHandler client : waitingRoom) {
+            client.sendMessage("Game done.");
+        }
         roomTimer = null;
         gameStarted = false;
     }
@@ -182,3 +240,45 @@ public class Server{
     }
 
 }
+
+
+
+//  Extras? 
+
+/*private static void startRound(int roundNumber) {
+    if (roundNumber >= 5) {
+        endGame();
+        return;
+    }
+    
+    for (ClientHandler client : waitingRoom) {
+        System.out.println(client.getPlayerName() + " Round " + roundNumber);
+        client.sendMessage("Round " + (roundNumber + 1));
+    }
+    
+    roundTimer = new Timer();
+    roundTimer.scheduleAtFixedRate(new TimerTask() {
+        private int countdown = 10;
+        
+        @Override 
+        public void run() {
+            if (countdown > 0) {
+                broadcastRoundTimer(countdown);
+                countdown--;
+            } else {
+                broadcastRoundTimer(countdown);
+                roundTimer.cancel(); // Stop this timer
+                
+                // Process round results here if needed
+                
+                // Start next round after a short delay
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        startRound(roundNumber + 1);
+                    }
+                }, 1000); // 1 second delay before next round
+            }
+        }
+    }, 0, 1000);
+}*/
