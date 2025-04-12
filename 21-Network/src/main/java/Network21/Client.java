@@ -136,8 +136,8 @@ public class Client extends javax.swing.JFrame {
                             WaitingRoom.setVisible(false);
                             RoundPanel.setVisible(true);
                             
-                        } else if(message.startsWith("Score")){
-                            String score = message.substring("Score".length());
+                        } else if(message.startsWith("Points")){
+                            String score = message.substring("Points".length());
                             ScoreLabel.setText("");
                             ScoreLabel.setText(score); 
                         } else if(message.startsWith("Game done.")){
@@ -148,6 +148,12 @@ public class Client extends javax.swing.JFrame {
                             RoundTimerLabel.setText("");
                             RoundTimerLabel.setText(timer);
                         
+                        } else if (message.startsWith("Score: ")) {
+                            String score = message.substring("Score: ".length());
+                            score = score.replace(" ", "\n");
+                            CurrentScoresText.setText("");
+                            CurrentScoresText.setText(score);
+                            
                         }else {
                                 ConnectedPlayers.append(message + "\n");
                         }

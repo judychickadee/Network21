@@ -13,7 +13,7 @@ public class ClientHandler implements Runnable{
     private BufferedReader in;
     private PrintWriter out;
     private String playerName;
-    private int score;
+    private int score = 0;
     public ArrayList<Card> hand = new ArrayList<Card>();
 
     public ClientHandler(Socket socket){
@@ -88,11 +88,11 @@ public class ClientHandler implements Runnable{
                     System.out.println(getPlayerName() + ": " + card);
         int cardValue=card.getValue();
              score+=cardValue;
-             out.println("Score"+ score);
+             out.println("Points"+ score);
              System.out.print("Score="+score);
     }
     public void pass(){
-        out.println("Score"+ score);   
+        out.println("Points"+ score);   
         System.out.print("Score="+score);
     }
 
