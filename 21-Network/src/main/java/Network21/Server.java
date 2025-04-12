@@ -74,6 +74,17 @@ public class Server{
             client.sendMessage(playerList.toString());
         }
     }
+    public static void broadcastScoreList(){
+        StringBuilder playerList = new StringBuilder("Score \n");
+        List<ClientHandler> sortedClients = new ArrayList<>(clients);
+    sortedClients.sort((a, b) -> Integer.compare(b.getScore(), a.getScore()));
+        for (ClientHandler client: sortedClients){
+            playerList.append(client.getPlayerName()).append(" ").append(client.getScore()).append("\n");
+        }
+        for (ClientHandler client : clients){
+            client.sendMessage(playerList.toString());
+        }
+    }
 
     public static String join(ClientHandler client) {
         if (Server.waitingRoom.size() >= 4) {

@@ -20,7 +20,9 @@ public class ClientHandler implements Runnable{
         this.socket = socket;
     }
 
-    
+    public int getScore(){
+        return score;
+    }
     @Override 
     public void run(){
         try{
