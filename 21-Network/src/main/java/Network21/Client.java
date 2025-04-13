@@ -165,9 +165,9 @@ public class Client extends javax.swing.JFrame {
                             WinnersTextArea.setText("");
                             WinnersTextArea.setText(score);
                             
-                        }/*else {
+                        }else {
                                 ConnectedPlayers.append(message + "\n");
-                        }*/
+                        }
                 });
         }
 
