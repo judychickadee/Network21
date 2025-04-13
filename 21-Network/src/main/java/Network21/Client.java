@@ -105,6 +105,7 @@ public class Client extends javax.swing.JFrame {
             RoundPanel.setVisible(false);
             ConnectionRoom.setVisible(true);
             NewGameButton.setVisible(false);
+            WinnersPanel.setVisible(false);
             
         }
 
