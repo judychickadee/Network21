@@ -153,6 +153,8 @@ public class Client extends javax.swing.JFrame {
                             score = score.replace(" ", "\n");
                             CurrentScoresText.setText("");
                             CurrentScoresText.setText(score);
+                            WinnersTextArea.setText("");
+                            WinnersTextArea.setText(score);
                             
                         }else {
                                 ConnectedPlayers.append(message + "\n");
@@ -170,6 +172,10 @@ public class Client extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LeaderBoardPanel = new javax.swing.JPanel();
+        LeaderBoardLabel = new javax.swing.JLabel();
+        WinnersPanel = new javax.swing.JScrollPane();
+        WinnersTextArea = new javax.swing.JTextArea();
         RoundPanel = new javax.swing.JPanel();
         RoundNumberLabel = new javax.swing.JLabel();
         BackOfCardLabel = new javax.swing.JLabel();
@@ -182,27 +188,57 @@ public class Client extends javax.swing.JFrame {
         CurrentScoreboardPane = new javax.swing.JScrollPane();
         CurrentScoresText = new javax.swing.JTextArea();
         RoundTimerLabel = new javax.swing.JLabel();
-        ConnectionRoom = new javax.swing.JPanel();
-        ConnectedRoomLabel = new javax.swing.JLabel();
-        ConnectedPlayerPane = new javax.swing.JScrollPane();
-        ConnectedPlayers = new javax.swing.JTextArea();
-        JoinButton = new javax.swing.JButton();
-        WaitingRoom = new javax.swing.JPanel();
-        WaitingRoomLabel = new javax.swing.JLabel();
-        Timer = new javax.swing.JLabel();
-        WaitingRoomPane = new javax.swing.JScrollPane();
-        WaitingPlayers = new javax.swing.JTextArea();
         UsernamePanel = new javax.swing.JPanel();
         GameName = new javax.swing.JLabel();
         UsernamePrompt = new javax.swing.JLabel();
         UsernameField = new javax.swing.JTextField();
         ConnectButton = new javax.swing.JButton();
-        LeaderBoardPanel = new javax.swing.JPanel();
-        LeaderBoardLabel = new javax.swing.JLabel();
+        WaitingRoom = new javax.swing.JPanel();
+        WaitingRoomLabel = new javax.swing.JLabel();
+        Timer = new javax.swing.JLabel();
+        WaitingRoomPane = new javax.swing.JScrollPane();
+        WaitingPlayers = new javax.swing.JTextArea();
+        ConnectionRoom = new javax.swing.JPanel();
+        ConnectedRoomLabel = new javax.swing.JLabel();
+        ConnectedPlayerPane = new javax.swing.JScrollPane();
+        ConnectedPlayers = new javax.swing.JTextArea();
+        JoinButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("21");
         setResizable(false);
+
+        LeaderBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LeaderBoardLabel.setText("Winners");
+
+        WinnersTextArea.setColumns(20);
+        WinnersTextArea.setRows(5);
+        WinnersPanel.setViewportView(WinnersTextArea);
+
+        javax.swing.GroupLayout LeaderBoardPanelLayout = new javax.swing.GroupLayout(LeaderBoardPanel);
+        LeaderBoardPanel.setLayout(LeaderBoardPanelLayout);
+        LeaderBoardPanelLayout.setHorizontalGroup(
+            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                .addGroup(LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(LeaderBoardLabel))
+                    .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(WinnersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(177, Short.MAX_VALUE))
+        );
+        LeaderBoardPanelLayout.setVerticalGroup(
+            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(LeaderBoardLabel)
+                .addGap(34, 34, 34)
+                .addComponent(WinnersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
+        );
 
         RoundNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         RoundNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -304,86 +340,6 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
-        ConnectedRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
-        ConnectedRoomLabel.setText("Connected Room");
-
-        ConnectedPlayers.setEditable(false);
-        ConnectedPlayers.setColumns(20);
-        ConnectedPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        ConnectedPlayers.setRows(5);
-        ConnectedPlayerPane.setViewportView(ConnectedPlayers);
-
-        JoinButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        JoinButton.setText("Join");
-
-        javax.swing.GroupLayout ConnectionRoomLayout = new javax.swing.GroupLayout(ConnectionRoom);
-        ConnectionRoom.setLayout(ConnectionRoomLayout);
-        ConnectionRoomLayout.setHorizontalGroup(
-            ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConnectionRoomLayout.createSequentialGroup()
-                .addContainerGap(168, Short.MAX_VALUE)
-                .addGroup(ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
-                        .addComponent(ConnectedRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(197, 197, 197))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
-                        .addComponent(ConnectedPlayerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(160, 160, 160))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
-                        .addComponent(JoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(300, 300, 300))))
-        );
-        ConnectionRoomLayout.setVerticalGroup(
-            ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConnectionRoomLayout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(ConnectedRoomLabel)
-                .addGap(36, 36, 36)
-                .addComponent(ConnectedPlayerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(JoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
-        );
-
-        WaitingRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
-        WaitingRoomLabel.setText("Waiting Room");
-
-        WaitingPlayers.setEditable(false);
-        WaitingPlayers.setColumns(20);
-        WaitingPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        WaitingPlayers.setRows(5);
-        WaitingRoomPane.setViewportView(WaitingPlayers);
-
-        javax.swing.GroupLayout WaitingRoomLayout = new javax.swing.GroupLayout(WaitingRoom);
-        WaitingRoom.setLayout(WaitingRoomLayout);
-        WaitingRoomLayout.setHorizontalGroup(
-            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
-                .addGroup(WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
-                        .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(236, 236, 236))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
-                        .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(180, 180, 180))))
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        WaitingRoomLayout.setVerticalGroup(
-            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(WaitingRoomLayout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
-        );
-
         GameName.setFont(new java.awt.Font("Helvetica Neue", 2, 36)); // NOI18N
         GameName.setText("21");
 
@@ -425,39 +381,105 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap(337, Short.MAX_VALUE))
         );
 
-        LeaderBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LeaderBoardLabel.setText("Winners");
+        WaitingRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
+        WaitingRoomLabel.setText("Waiting Room");
 
-        javax.swing.GroupLayout LeaderBoardPanelLayout = new javax.swing.GroupLayout(LeaderBoardPanel);
-        LeaderBoardPanel.setLayout(LeaderBoardPanelLayout);
-        LeaderBoardPanelLayout.setHorizontalGroup(
-            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(LeaderBoardLabel)
-                .addContainerGap(327, Short.MAX_VALUE))
+        WaitingPlayers.setEditable(false);
+        WaitingPlayers.setColumns(20);
+        WaitingPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        WaitingPlayers.setRows(5);
+        WaitingRoomPane.setViewportView(WaitingPlayers);
+
+        javax.swing.GroupLayout WaitingRoomLayout = new javax.swing.GroupLayout(WaitingRoom);
+        WaitingRoom.setLayout(WaitingRoomLayout);
+        WaitingRoomLayout.setHorizontalGroup(
+            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addGroup(WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
+                        .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(236, 236, 236))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, WaitingRoomLayout.createSequentialGroup()
+                        .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(180, 180, 180))))
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        LeaderBoardPanelLayout.setVerticalGroup(
-            LeaderBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeaderBoardPanelLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(LeaderBoardLabel)
-                .addContainerGap(525, Short.MAX_VALUE))
+        WaitingRoomLayout.setVerticalGroup(
+            WaitingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WaitingRoomLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(WaitingRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(WaitingRoomPane, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(247, Short.MAX_VALUE))
+        );
+
+        ConnectedRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
+        ConnectedRoomLabel.setText("Connected Room");
+
+        ConnectedPlayers.setEditable(false);
+        ConnectedPlayers.setColumns(20);
+        ConnectedPlayers.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        ConnectedPlayers.setRows(5);
+        ConnectedPlayerPane.setViewportView(ConnectedPlayers);
+
+        JoinButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        JoinButton.setText("Join");
+
+        javax.swing.GroupLayout ConnectionRoomLayout = new javax.swing.GroupLayout(ConnectionRoom);
+        ConnectionRoom.setLayout(ConnectionRoomLayout);
+        ConnectionRoomLayout.setHorizontalGroup(
+            ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ConnectionRoomLayout.createSequentialGroup()
+                .addContainerGap(168, Short.MAX_VALUE)
+                .addGroup(ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
+                        .addComponent(ConnectedRoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(197, 197, 197))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
+                        .addComponent(ConnectedPlayerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(160, 160, 160))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConnectionRoomLayout.createSequentialGroup()
+                        .addComponent(JoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(300, 300, 300))))
+        );
+        ConnectionRoomLayout.setVerticalGroup(
+            ConnectionRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ConnectionRoomLayout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(ConnectedRoomLabel)
+                .addGap(36, 36, 36)
+                .addComponent(ConnectedPlayerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(JoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 715, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -467,24 +489,26 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 677, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(RoundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -494,13 +518,8 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(UsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConnectionRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(LeaderBoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
 
         pack();
@@ -575,5 +594,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel WaitingRoom;
     private javax.swing.JLabel WaitingRoomLabel;
     private javax.swing.JScrollPane WaitingRoomPane;
+    private javax.swing.JScrollPane WinnersPanel;
+    private javax.swing.JTextArea WinnersTextArea;
     // End of variables declaration//GEN-END:variables
 }

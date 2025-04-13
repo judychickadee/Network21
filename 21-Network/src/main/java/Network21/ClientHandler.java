@@ -23,6 +23,11 @@ public class ClientHandler implements Runnable{
     public int getScore(){
         return score;
     }
+    
+    public void setScore(int s){
+        score = s;
+    }
+    
     @Override 
     public void run(){
         try{
