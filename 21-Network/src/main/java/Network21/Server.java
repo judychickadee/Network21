@@ -100,7 +100,7 @@ public class Server {
     }
 
     public static String join(ClientHandler client) {
-        if (Server.waitingRoom.size() >= 4) {
+        if (Server.waitingRoom.size() >= 4 || gameStarted) {
             return "Cannot join game at this time. Try again in a few minutes";
         }
         Server.waitingRoom.add(client);
