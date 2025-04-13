@@ -210,8 +210,8 @@ public class Server {
     }
 
     public static void endGame() {
+        declareWinners();
         for (ClientHandler client : waitingRoom) {
-            declareWinners();
             client.setScore(0);
             client.sendMessage("Game done.");
         }
