@@ -53,9 +53,14 @@ public class ClientHandler implements Runnable{
                     out.println(joined);
                 }
                 if (message.equalsIgnoreCase("hit")){
-                    hit(Server.deck);}
-                 if (message.equalsIgnoreCase("pass")){
-                    pass();}
+                    hit(Server.deck);
+                }
+                if (message.equalsIgnoreCase("pass")){
+                    pass();
+                }
+                if(message.equalsIgnoreCase("leave game")){
+                    leaveGame();
+                }
             }
 
 
@@ -100,6 +105,11 @@ public class ClientHandler implements Runnable{
     public void pass(){
         out.println("Points"+ score);   
         System.out.print("Score="+score);
+    }
+    
+    public void leaveGame(){
+        Server.waitingRoom.remove(this);
+        score = 0;
     }
 
 }
