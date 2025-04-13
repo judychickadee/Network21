@@ -46,6 +46,7 @@ public class ClientHandler implements Runnable{
                 if (message.equalsIgnoreCase("exit")) { 
                     removeClient();
                     out.println("Client left.");
+                    break; 
                 }
                 if (message.equalsIgnoreCase("join")){
                     String joined = Server.join(this);
