@@ -104,6 +104,7 @@ public class Client extends javax.swing.JFrame {
             out.println("leave game");
             RoundPanel.setVisible(false);
             ConnectionRoom.setVisible(true);
+            NewGameButton.setVisible(false);
             
         }
 
@@ -164,6 +165,7 @@ public class Client extends javax.swing.JFrame {
                             CurrentScoresText.setText(score);
                             WinnersTextArea.setText("");
                             WinnersTextArea.setText(score);
+                            NewGameButton.setVisible(true);
                             
                         }else {
                                 ConnectedPlayers.append(message + "\n");
