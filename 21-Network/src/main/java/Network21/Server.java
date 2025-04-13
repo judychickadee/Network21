@@ -211,9 +211,9 @@ public class Server {
 
     public static void endGame() {
         for (ClientHandler client : waitingRoom) {
+            declareWinners();
             client.setScore(0);
             client.sendMessage("Game done.");
-            declareWinners();
         }
         roomTimer = null;
         gameStarted = false;
