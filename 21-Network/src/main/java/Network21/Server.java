@@ -135,7 +135,7 @@ public class Server{
         return client.getPlayerName() + " joined.";
     }
     
-    public static synchronized void startGame() {
+    /*public static synchronized void startGame() {
     if (gameStarted) {
         System.out.println("already started");
         return;
@@ -154,6 +154,9 @@ public class Server{
                 CountDownLatch latch = new CountDownLatch(1);
                 startCountdown(latch);
                 latch.await(); // Wait until countdown completes
+                if( i ==4 ){
+                    
+                }
             }
             endGame();
         } catch (InterruptedException e) {
@@ -180,6 +183,65 @@ private static void startCountdown(CountDownLatch latch) {
             countdown[0]--;
         } else {
             broadcastRoundTimer(countdown[0]);
+            latch.countDown(); // Signal that countdown is complete
+        }
+    }, 0, 1, TimeUnit.SECONDS);
+}*/
+    
+    
+
+public static synchronized void startGame() {
+    if (gameStarted) {
+        System.out.println("already started");
+        return;
+    }
+    
+    gameStarted = true;
+    System.out.println("started");
+    deck = new Deck();
+    
+    new Thread(() -> {
+        try {
+            for (int i = 0; i < 5; i++) {
+                startRound(i);
+                // Wait for round to complete
+                CountDownLatch latch = new CountDownLatch(1);
+                boolean isFinalRound = (i == 4);
+                startCountdown(latch, isFinalRound);
+                latch.await(); // Wait until countdown completes
+            }
+            endGame();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }).start();
+}
+
+    private static void startRound(int roundNumber) {
+    for (ClientHandler client : waitingRoom) {
+        System.out.println(client.getPlayerName() + " Round " + roundNumber);
+        client.sendMessage("Round " + (roundNumber + 1));
+        broadcastScoreList();
+    }
+}
+
+private static void startCountdown(CountDownLatch latch, boolean isFinalRound) {
+    final int[] countdown = {10};
+    final ScheduledFuture<?>[] timerHolder = new ScheduledFuture<?>[1]; // Holder for timer
+    
+    timerHolder[0] = executor.scheduleAtFixedRate(() -> {
+        if (countdown[0] > 0) {
+            broadcastRoundTimer(countdown[0]);
+            countdown[0]--;
+        } else {
+            // For final round, don't broadcast 00:00
+            if (!isFinalRound) {
+                broadcastRoundTimer(countdown[0]);
+            }
+            
+            // Cancel the timer task
+            timerHolder[0].cancel(false);
+            
             latch.countDown(); // Signal that countdown is complete
         }
     }, 0, 1, TimeUnit.SECONDS);
