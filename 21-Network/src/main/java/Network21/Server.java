@@ -76,9 +76,21 @@ public class Server{
     }
     public static void broadcastScoreList(){
         StringBuilder playerList = new StringBuilder("Score: ");
-        List<ClientHandler> sortedClients = new ArrayList<>(clients);
+        List<ClientHandler> losers = new ArrayList<>();
+        List<ClientHandler> sortedClients = new ArrayList<>();
+        for(ClientHandler client : waitingRoom){
+            if(client.getScore() > 21){
+                losers.add(client);
+            } else {
+                sortedClients.add(client);
+            }
+        }
         sortedClients.sort((a, b) -> Integer.compare(b.getScore(), a.getScore()));
+        losers.sort((a,b) -> Integer.compare(a.getScore(), b.getScore()));
         for (ClientHandler client: sortedClients){
+            playerList.append(client.getPlayerName()).append("-").append(client.getScore()).append(" ");
+        }
+        for (ClientHandler client : losers){
             playerList.append(client.getPlayerName()).append("-").append(client.getScore()).append(" ");
         }
         for (ClientHandler client : clients){
