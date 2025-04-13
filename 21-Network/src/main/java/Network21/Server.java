@@ -49,10 +49,10 @@ public class Server {
     }
 
     public static void broadcastClients() {
-        StringBuilder playerList = new StringBuilder("Connected Players: \n");
+        StringBuilder playerList = new StringBuilder("Connected Players: "); // \n
 
         for (ClientHandler client : clients) {
-            playerList.append(client.getPlayerName()).append("\n");
+            playerList.append(client.getPlayerName()).append(" ");
         }
 
         for (ClientHandler client : clients) {

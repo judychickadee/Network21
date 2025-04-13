@@ -119,7 +119,7 @@ public class Client extends javax.swing.JFrame {
                                 WaitingPlayers.setText(""); // Clear the previous list
 
                                 // Extract the part after "Waiting Players:\n"
-                                String playerList = message.substring("Waiting Players:\n".length());
+                                String playerList = message.substring("Waiting Players: ".length());
                                 playerList = playerList.replace(" ", "\n");
 
                                 WaitingPlayers.setText(playerList); // Update the text area with the player names
@@ -135,8 +135,10 @@ public class Client extends javax.swing.JFrame {
                         // Handle other types of messages (e.g., connected players, etc.)
                         else if (message.startsWith("Connected Players:")) {
                                 ConnectedPlayers.setText("");
-                                String displayMessage = message.substring("Connected Players:\n".length());
-                                ConnectedPlayers.append(displayMessage);
+                                String displayMessage = message.substring("Connected Players: ".length());
+                                displayMessage = displayMessage.replace(" ", "\n");
+                                //ConnectedPlayers.append(displayMessage);
+                                ConnectedPlayers.setText(displayMessage);
                                 ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
                                 ConnectionRoom.revalidate();
                         } else if(message.startsWith("Round ")){
