@@ -13,93 +13,93 @@ public class Client extends javax.swing.JFrame {
     private PrintWriter out;
 
     private String username;
-    
+
     public Client() {
         initComponents();
-        
 
-                UsernamePanel.setVisible(true);
-                ConnectionRoom.setVisible(false);
-                WaitingRoom.setVisible(false);
-                RoundPanel.setVisible(false);
-                LeaderBoardPanel.setVisible(false);
+        UsernamePanel.setVisible(true);
+        ConnectionRoom.setVisible(false);
+        WaitingRoom.setVisible(false);
+        RoundPanel.setVisible(false);
+        LeaderBoardPanel.setVisible(false);
 
-                ConnectButton.addActionListener(evt -> connectToServer());
-                JoinButton.addActionListener(evt -> joinWaitingRoom()); // Action for joinButton in ConnectedRoom
+        ConnectButton.addActionListener(evt -> connectToServer());
+        JoinButton.addActionListener(evt -> joinWaitingRoom()); // Action for joinButton in ConnectedRoom
 
-                HitButton.addActionListener(evt -> hit()); 
-                PassButton.addActionListener(evt -> pass());
-                LeaveGameButton.addActionListener(evt -> LeaveGame());
-                NewGameButton.addActionListener(evt -> LeaveGame());
+        HitButton.addActionListener(evt -> hit());
+        PassButton.addActionListener(evt -> pass());
+        LeaveGameButton.addActionListener(evt -> LeaveGame());
+        NewGameButton.addActionListener(evt -> LeaveGame());
 
-                // Add a window listener to handle the close operation
-                this.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosing(WindowEvent e) {
-                                sendExitMessage();
-                                System.exit(0); // Close the application
-                        }
-                });
+        // Add a window listener to handle the close operation
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                sendExitMessage();
+                System.exit(0); // Close the application
+            }
+        });
     }
-    
+
     private void sendExitMessage() {
-                if (out != null) {
-                        out.println("exit"); // Send exit message to the server
-                }
+        if (out != null) {
+            out.println("exit"); // Send exit message to the server
+        }
     }
-    
+
     public void connectToServer() {
-                username = UsernameField.getText().trim();
+        username = UsernameField.getText().trim();
 
-                if (username.isEmpty()) {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Username cannot be empty!");
-                        return;
-                }
-
-                try {
-                        socket = new Socket("localhost", 2121);
-                        out = new PrintWriter(socket.getOutputStream(), true); // Auto flush
-
-                        out.println(username);
-                        new Thread(new Listener(socket, this)).start();
-
-                        // Update UI
-                        UsernamePanel.setVisible(false);
-                        ConnectionRoom.setVisible(true);
-
-                        ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-        }
-        
-        public void joinWaitingRoom() {
-
-                out.println("join"); // Send "join" message to the server
-
-                System.out.println("Switching to WaitingPlayers panel...");
-                ConnectionRoom.setVisible(false);
-                WaitingRoom.setVisible(true);
-                WaitingRoomLabel.setVisible(true);
-                System.out.println("WaitingPlayers panel visible: " + WaitingRoom.isVisible());
-
-                WaitingPlayers.setCaretPosition(WaitingPlayers.getDocument().getLength());
+        if (username.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username cannot be empty!");
+            return;
         }
 
-        public void hit(){
-            out.println("Hit");
-            HitButton.setEnabled(false);
-            PassButton.setEnabled(false);
-            System.out.println("hit button clicked");
+        try {
+            socket = new Socket("localhost", 2121);
+            out = new PrintWriter(socket.getOutputStream(), true); // Auto flush
+
+            out.println(username);
+            new Thread(new Listener(socket, this)).start();
+
+            // Update UI
+            UsernamePanel.setVisible(false);
+            ConnectionRoom.setVisible(true);
+
+            ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public void pass(){
-            out.println("Pass");
-            HitButton.setEnabled(false);
-            PassButton.setEnabled(false);
-            System.out.println("Pass button clicked");
-        }
-        
-        public void LeaveGame(){
+    }
+
+    public void joinWaitingRoom() {
+
+        out.println("join"); // Send "join" message to the server
+
+        System.out.println("Switching to WaitingPlayers panel...");
+        ConnectionRoom.setVisible(false);
+        WaitingRoom.setVisible(true);
+        WaitingRoomLabel.setVisible(true);
+        System.out.println("WaitingPlayers panel visible: " + WaitingRoom.isVisible());
+
+        WaitingPlayers.setCaretPosition(WaitingPlayers.getDocument().getLength());
+    }
+
+    public void hit() {
+        out.println("Hit");
+        HitButton.setEnabled(false);
+        PassButton.setEnabled(false);
+        System.out.println("hit button clicked");
+    }
+
+    public void pass() {
+        out.println("Pass");
+        HitButton.setEnabled(false);
+        PassButton.setEnabled(false);
+        System.out.println("Pass button clicked");
+    }
+
+    /*public void LeaveGame(){
             out.println("leave game");
             RoundPanel.setVisible(false);
             ConnectionRoom.setVisible(true);
@@ -107,78 +107,100 @@ public class Client extends javax.swing.JFrame {
             WinnersPanel.setVisible(false);
             LeaderBoardLabel.setVisible(false);
             
-        }
+        }*/
+    public void LeaveGame() {
+        out.println("leave game");
 
-        public void handleMessage(String message) {
-                SwingUtilities.invokeLater(() -> {
-                        System.out.println("Received message: " + message);
+        // Hide game-related panels
+        RoundPanel.setVisible(false);
+        LeaderBoardPanel.setVisible(false);
+        WinnersPanel.setVisible(false);
 
-                        // Handle message for "Waiting Players:"
-                        if (message.startsWith("Waiting Players:")) {
-                                WaitingRoom.setVisible(true); // Make sure the panel is visible now
-                                WaitingRoomLabel.setVisible(true);
-                                WaitingPlayers.setText(""); // Clear the previous list
+        // Show ConnectionRoom and ALL its components
+        ConnectionRoom.setVisible(true);
+        ConnectionRoomLabel.setVisible(true);  // Make sure label is visible
+        JoinButton.setVisible(true);          // Make sure button is visible
+        ConnectedPlayerPane.setVisible(true); // Make sure player list is visible
 
-                                // Extract the part after "Waiting Players:\n"
-                                String playerList = message.substring("Waiting Players: ".length());
-                                playerList = playerList.replace(" ", "\n");
+        // Reset game state UI elements
+        NewGameButton.setVisible(false);
+        HitButton.setEnabled(true);
+        PassButton.setEnabled(true);
 
-                                WaitingPlayers.setText(playerList); // Update the text area with the player names
-                                WaitingPlayers.setCaretPosition(WaitingPlayers.getDocument().getLength());
-                        } else if (message.startsWith("00:")) {
-                                Timer.setText("");
-                                Timer.setText(message);
-                        } else if (message.startsWith("Cannot join game at this time.")) {
-                                javax.swing.JOptionPane.showMessageDialog(this, message);
-                                ConnectionRoom.setVisible(true);
-                                WaitingRoom.setVisible(false);
-                        }
-                        // Handle other types of messages (e.g., connected players, etc.)
-                        else if (message.startsWith("Connected Players:")) {
-                                ConnectedPlayers.setText("");
-                                String displayMessage = message.substring("Connected Players: ".length());
-                                displayMessage = displayMessage.replace(" ", "\n");
-                                //ConnectedPlayers.append(displayMessage);
-                                ConnectedPlayers.setText(displayMessage);
-                                ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
-                                ConnectionRoom.revalidate();
-                        } else if(message.startsWith("Round ")){
-                            HitButton.setEnabled(true);
-                            PassButton.setEnabled(true);
-                            RoundNumberLabel.setText("");
-                            RoundNumberLabel.setText(message);
-                            WaitingRoom.setVisible(false);
-                            RoundPanel.setVisible(true);
-                            NewGameButton.setVisible(false);
-                            
-                        } else if(message.startsWith("Points")){
-                            String score = message.substring("Points".length());
-                            CurrentScore.setText("");
-                            CurrentScore.setText(score); 
-                        } else if(message.startsWith("Game done.")){
-                            RoundPanel.setVisible(false);
-                            LeaderBoardPanel.setVisible(true);
-                        } else if(message.startsWith("Round00:")){
-                            String timer = message.substring("Round".length());
-                            RoundTimerLabel.setText("");
-                            RoundTimerLabel.setText(timer);
-                        
-                        } else if (message.startsWith("Score: ")) {
-                            String score = message.substring("Score: ".length());
-                            score = score.replace(" ", "\n");
-                            CurrentScoresText.setText("");
-                            CurrentScoresText.setText(score);
-                            WinnersTextArea.setText("");
-                            WinnersTextArea.setText(score);
-                            NewGameButton.setVisible(true);
-                            WinnersTextArea.setVisible(true);
-                            
-                        }/*else {
+        // If using CardLayout, you might need to call revalidate/repaint
+        ConnectionRoom.revalidate();
+        ConnectionRoom.repaint();
+    }
+
+    public void handleMessage(String message) {
+        SwingUtilities.invokeLater(() -> {
+            System.out.println("Received message: " + message);
+
+            // Handle message for "Waiting Players:"
+            if (message.startsWith("Waiting Players:")) {
+                WaitingRoom.setVisible(true); // Make sure the panel is visible now
+                WaitingRoomLabel.setVisible(true);
+                WaitingPlayers.setText(""); // Clear the previous list
+
+                // Extract the part after "Waiting Players:\n"
+                String playerList = message.substring("Waiting Players: ".length());
+                playerList = playerList.replace(" ", "\n");
+
+                WaitingPlayers.setText(playerList); // Update the text area with the player names
+                WaitingPlayers.setCaretPosition(WaitingPlayers.getDocument().getLength());
+            } else if (message.startsWith("00:")) {
+                Timer.setText("");
+                Timer.setText(message);
+            } else if (message.startsWith("Cannot join game at this time.")) {
+                javax.swing.JOptionPane.showMessageDialog(this, message);
+                ConnectionRoom.setVisible(true);
+                WaitingRoom.setVisible(false);
+            } // Handle other types of messages (e.g., connected players, etc.)
+            else if (message.startsWith("Connected Players:")) {
+                ConnectedPlayers.setText("");
+                String displayMessage = message.substring("Connected Players: ".length());
+                displayMessage = displayMessage.replace(" ", "\n");
+                //ConnectedPlayers.append(displayMessage);
+                ConnectedPlayers.setText(displayMessage);
+                ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
+                ConnectionRoom.revalidate();
+            } else if (message.startsWith("Round ")) {
+                HitButton.setEnabled(true);
+                PassButton.setEnabled(true);
+                RoundNumberLabel.setText("");
+                RoundNumberLabel.setText(message);
+                WaitingRoom.setVisible(false);
+                RoundPanel.setVisible(true);
+                NewGameButton.setVisible(false);
+
+            } else if (message.startsWith("Points")) {
+                String score = message.substring("Points".length());
+                CurrentScore.setText("");
+                CurrentScore.setText(score);
+            } else if (message.startsWith("Game done.")) {
+                RoundPanel.setVisible(false);
+                LeaderBoardPanel.setVisible(true);
+            } else if (message.startsWith("Round00:")) {
+                String timer = message.substring("Round".length());
+                RoundTimerLabel.setText("");
+                RoundTimerLabel.setText(timer);
+
+            } else if (message.startsWith("Score: ")) {
+                String score = message.substring("Score: ".length());
+                score = score.replace(" ", "\n");
+                CurrentScoresText.setText("");
+                CurrentScoresText.setText(score);
+                WinnersTextArea.setText("");
+                WinnersTextArea.setText(score);
+                NewGameButton.setVisible(true);
+                WinnersTextArea.setVisible(true);
+
+            }/*else {
                                 ConnectedPlayers.append(message + "\n");
                         }*/
-                });
-        }
-    
+        });
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -250,8 +272,6 @@ public class Client extends javax.swing.JFrame {
         WinnersPanel.setViewportView(WinnersTextArea);
 
         LeaderBoardPanel.add(WinnersPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 360, 200));
-
-        LeaderboardBG.setIcon(new javax.swing.ImageIcon("/Users/jojowa/Desktop/IT328/Network/src/main/resources/images/UsernameBG.jpg")); // NOI18N
         LeaderBoardPanel.add(LeaderboardBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1620));
 
         getContentPane().add(LeaderBoardPanel, "card2");
@@ -277,8 +297,6 @@ public class Client extends javax.swing.JFrame {
 
         ConnectButton.setText("Connect");
         UsernamePanel.add(ConnectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
-
-        UsernameBG.setIcon(new javax.swing.ImageIcon("/Users/jojowa/Desktop/IT328/Network/src/main/resources/images/UsernameBG.jpg")); // NOI18N
         UsernamePanel.add(UsernameBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1610));
 
         getContentPane().add(UsernamePanel, "card2");
@@ -299,8 +317,6 @@ public class Client extends javax.swing.JFrame {
         ConnectedPlayerPane.setViewportView(ConnectedPlayers);
 
         ConnectionRoom.add(ConnectedPlayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 400, 210));
-
-        ConnectionRoomBG.setIcon(new javax.swing.ImageIcon("/Users/jojowa/Desktop/IT328/Network/src/main/resources/images/UsernameBG.jpg")); // NOI18N
         ConnectionRoom.add(ConnectionRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -290, 2570, 1610));
 
         getContentPane().add(ConnectionRoom, "card2");
@@ -320,8 +336,6 @@ public class Client extends javax.swing.JFrame {
         WaitingRoomPane.setViewportView(WaitingPlayers);
 
         WaitingRoom.add(WaitingRoomPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 370, 210));
-
-        WaitingRoomBG.setIcon(new javax.swing.ImageIcon("/Users/jojowa/Desktop/IT328/Network/src/main/resources/images/UsernameBG.jpg")); // NOI18N
         WaitingRoom.add(WaitingRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1610));
 
         getContentPane().add(WaitingRoom, "card2");
@@ -330,19 +344,29 @@ public class Client extends javax.swing.JFrame {
 
         RoundNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         RoundNumberLabel.setText("Round");
-        RoundPanel.add(RoundNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, 20));
+        RoundPanel.add(RoundNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, 20));
 
         RoundTimerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        RoundPanel.add(RoundTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 100, 30));
+        RoundPanel.add(RoundTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 100, 30));
 
         BackOfCardLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 270, 400));
+        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 270, 400));
 
         PassButton.setText("Pass");
-        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 690, 110, 40));
+        PassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassButtonActionPerformed(evt);
+            }
+        });
+        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 630, 110, 40));
 
         HitButton.setText("Hit");
-        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 690, 110, 40));
+        HitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HitButtonActionPerformed(evt);
+            }
+        });
+        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 630, 110, 40));
 
         CurrentScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         CurrentScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -361,7 +385,7 @@ public class Client extends javax.swing.JFrame {
                 LeaveGameButtonActionPerformed(evt);
             }
         });
-        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 760, 110, 40));
+        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 690, 110, 40));
 
         CurrentScoreBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         CurrentScoreBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -374,8 +398,6 @@ public class Client extends javax.swing.JFrame {
         CurrentScoreboardPane.setViewportView(CurrentScoresText);
 
         RoundPanel.add(CurrentScoreboardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 340, 260, 280));
-
-        RoundBG.setIcon(new javax.swing.ImageIcon("/Users/jojowa/Desktop/IT328/Network/src/main/resources/images/UsernameBG.jpg")); // NOI18N
         RoundPanel.add(RoundBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1620));
 
         getContentPane().add(RoundPanel, "card2");
@@ -390,6 +412,14 @@ public class Client extends javax.swing.JFrame {
     private void LeaveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeaveGameButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LeaveGameButtonActionPerformed
+
+    private void PassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PassButtonActionPerformed
+
+    private void HitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HitButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HitButtonActionPerformed
 
     /**
      * @param args the command line arguments
