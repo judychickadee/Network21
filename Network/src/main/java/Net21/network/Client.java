@@ -1,5 +1,7 @@
 package Net21.network;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.*;
 import java.net.Socket;
 import javax.swing.*;
@@ -16,12 +18,21 @@ public class Client extends javax.swing.JFrame {
 
     public Client() {
         initComponents();
+     //   ImageIcon testIcon = new ImageIcon(getClass().getResource("/images/Clubs/1.jpg"));
+// JOptionPane.showMessageDialog(this, "Test Image", "Test", JOptionPane.INFORMATION_MESSAGE, testIcon);
+        BackOfCardLabel.setPreferredSize(new Dimension(150, 200));
+BackOfCardLabel.setMinimumSize(new Dimension(150, 200));
+BackOfCardLabel.setSize(new Dimension(150, 200));
+RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
+    370, 190, 150, 200));
 
         UsernamePanel.setVisible(true);
         ConnectionRoom.setVisible(false);
         WaitingRoom.setVisible(false);
         RoundPanel.setVisible(false);
         LeaderBoardPanel.setVisible(false);
+        
+   
 
         ConnectButton.addActionListener(evt -> connectToServer());
         JoinButton.addActionListener(evt -> joinWaitingRoom()); // Action for joinButton in ConnectedRoom
@@ -91,7 +102,17 @@ public class Client extends javax.swing.JFrame {
         PassButton.setEnabled(false);
         System.out.println("hit button clicked");
     }
+   private void displayPrivateCard(Card card) {
+    System.out.println("Card dimensions: " + 
+        card.getImage().getIconWidth() + "x" + 
+        card.getImage().getIconHeight());
+     System.out.println("RoundPanel visible: " + RoundPanel.isVisible());
 
+   
+    BackOfCardLabel.setIcon(card.getImage());
+    BackOfCardLabel.revalidate();
+    BackOfCardLabel.repaint();
+}
     public void pass() {
         out.println("Pass");
         HitButton.setEnabled(false);
@@ -195,7 +216,12 @@ public class Client extends javax.swing.JFrame {
                 NewGameButton.setVisible(true);
                 WinnersTextArea.setVisible(true);
 
-            }/*else {
+            }
+            else if (message.startsWith("Card:")) {
+    // Example message format: "Card:Hearts:Ace:1:images/Hearts/Ace"
+    String[] parts = message.split(":");
+    Card drawnCard = new Card(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4]); 
+    displayPrivateCard(drawnCard); } /*else { 
                                 ConnectedPlayers.append(message + "\n");
                         }*/
         });

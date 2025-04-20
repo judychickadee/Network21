@@ -102,6 +102,7 @@ public class ClientHandler implements Runnable{
         int cardValue=card.getValue();
              score+=cardValue;
              out.println("Points"+ score);
+              out.println("Card:" + card.suit + ":" + card.rank + ":" + cardValue + ":" + card.path); // test
              System.out.print("Score="+score);
     }
     public void pass(){
