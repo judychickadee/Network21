@@ -24,7 +24,7 @@ public class Client extends javax.swing.JFrame {
         BackOfCardLabel.setMinimumSize(new Dimension(150, 200));
         BackOfCardLabel.setSize(new Dimension(150, 200));
         RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
-                370, 190, 150, 200));
+                430, 230, 150, 200));
 
         UsernamePanel.setVisible(true);
         ConnectionRoom.setVisible(false);
@@ -278,7 +278,6 @@ public class Client extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("21");
         setExtendedState(6);
-        setPreferredSize(new java.awt.Dimension(2560, 1600));
         setResizable(false);
         setSize(new java.awt.Dimension(2560, 1600));
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -377,7 +376,7 @@ public class Client extends javax.swing.JFrame {
         RoundPanel.add(RoundTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 100, 30));
 
         BackOfCardLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 270, 400));
+        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 150, 200));
 
         PassButton.setText("Pass");
         PassButton.addActionListener(new java.awt.event.ActionListener() {
@@ -385,7 +384,7 @@ public class Client extends javax.swing.JFrame {
                 PassButtonActionPerformed(evt);
             }
         });
-        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 630, 110, 40));
+        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 510, 110, 40));
 
         HitButton.setText("Hit");
         HitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -393,7 +392,7 @@ public class Client extends javax.swing.JFrame {
                 HitButtonActionPerformed(evt);
             }
         });
-        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 630, 110, 40));
+        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, 110, 40));
 
         CurrentScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         CurrentScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -412,7 +411,7 @@ public class Client extends javax.swing.JFrame {
                 LeaveGameButtonActionPerformed(evt);
             }
         });
-        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 690, 110, 40));
+        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 600, 110, 40));
 
         CurrentScoreBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         CurrentScoreBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
