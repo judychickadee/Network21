@@ -2,6 +2,7 @@ package Net21.network;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.*;
 import java.net.Socket;
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class Client extends javax.swing.JFrame {
 
     public Client() {
         initComponents();
+        initBackgroundImages();
         //   ImageIcon testIcon = new ImageIcon(getClass().getResource("/images/Clubs/1.jpg"));
 // JOptionPane.showMessageDialog(this, "Test Image", "Test", JOptionPane.INFORMATION_MESSAGE, testIcon);
         BackOfCardLabel.setPreferredSize(new Dimension(150, 200));
@@ -48,6 +50,52 @@ public class Client extends javax.swing.JFrame {
                 System.exit(0); // Close the application
             }
         });
+    }
+
+    private void initBackgroundImages() {
+        try {
+            // Load the image from resources
+            ImageIcon waitingRoom = new ImageIcon(getClass().getResource("/images/Majlis.jpg"));
+
+            // Scale the image to fit the label if needed
+            Image majlis = waitingRoom.getImage();
+            Image scaledMajlis = majlis.getScaledInstance(WaitingRoomBG.getWidth(), WaitingRoomBG.getHeight(), Image.SCALE_SMOOTH);
+
+            // Set the icon
+            WaitingRoomBG.setIcon(new ImageIcon(scaledMajlis));
+            
+            
+            ImageIcon connectedRoom = new ImageIcon(getClass().getResource("/images/Seeb.jpg")); // Also Seeb2
+            Image seeb = connectedRoom.getImage();
+            Image scaledSeeb = seeb.getScaledInstance(ConnectionRoomBG.getWidth(), ConnectionRoomBG.getHeight(), Image.SCALE_SMOOTH);
+            
+            ConnectionRoomBG.setIcon(new ImageIcon(scaledSeeb));
+            
+            
+            ImageIcon round = new ImageIcon(getClass().getResource("/images/Carpet.jpg"));
+            Image carpet = round.getImage();
+            Image scaledCarpet = carpet.getScaledInstance(RoundBG.getWidth(), RoundBG.getHeight(), Image.SCALE_SMOOTH);
+            
+            //RoundBG.setIcon(new ImageIcon(scaledCarpet));
+            LeaderboardBG.setIcon(new ImageIcon(scaledCarpet));
+            
+            
+            
+            ImageIcon usernamebg = new ImageIcon(getClass().getResource("/images/Door.jpg"));
+            Image door = usernamebg.getImage();
+            Image scaledDoor = door.getScaledInstance(UsernameBG.getWidth(), UsernameBG.getHeight(), Image.SCALE_SMOOTH);
+            
+            UsernameBG.setIcon(new ImageIcon(scaledDoor));
+            
+            
+            
+            
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading background images");
+        }
     }
 
     private void sendExitMessage() {
@@ -111,6 +159,35 @@ public class Client extends javax.swing.JFrame {
         BackOfCardLabel.revalidate();
         BackOfCardLabel.repaint();
     }
+    
+    /*private void displayPrivateCard(Card card) {
+    try {
+        // Load the card image
+        ImageIcon cardIcon = new ImageIcon(getClass().getResource(card.getImagePath()));
+        
+        // Scale the image if needed (optional)
+        Image image = cardIcon.getImage();
+        Image scaledImage = image.getScaledInstance(
+            BackOfCardLabel.getWidth(),
+            BackOfCardLabel.getHeight(),
+            Image.SCALE_SMOOTH
+        );
+        
+        // Set the icon
+        BackOfCardLabel.setIcon(new ImageIcon(scaledImage));
+        BackOfCardLabel.revalidate();
+        BackOfCardLabel.repaint();
+        
+        System.out.println("Card displayed: " + card.getImagePath());
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.err.println("Error loading card image: " + card.getImagePath());
+        // Fallback - display a blank card or placeholder
+        BackOfCardLabel.setIcon(null);
+        BackOfCardLabel.setBackground(Color.BLUE); // Example fallback
+        BackOfCardLabel.setOpaque(true);
+    }
+}*/
 
     public void pass() {
         out.println("Pass");
@@ -298,7 +375,7 @@ public class Client extends javax.swing.JFrame {
         WinnersPanel.setViewportView(WinnersTextArea);
 
         LeaderBoardPanel.add(WinnersPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 360, 200));
-        LeaderBoardPanel.add(LeaderboardBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1620));
+        LeaderBoardPanel.add(LeaderboardBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
 
         getContentPane().add(LeaderBoardPanel, "card2");
 
@@ -323,7 +400,7 @@ public class Client extends javax.swing.JFrame {
 
         ConnectButton.setText("Connect");
         UsernamePanel.add(ConnectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
-        UsernamePanel.add(UsernameBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1610));
+        UsernamePanel.add(UsernameBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
 
         getContentPane().add(UsernamePanel, "card2");
 
@@ -343,7 +420,7 @@ public class Client extends javax.swing.JFrame {
         ConnectedPlayerPane.setViewportView(ConnectedPlayers);
 
         ConnectionRoom.add(ConnectedPlayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 400, 210));
-        ConnectionRoom.add(ConnectionRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -290, 2570, 1610));
+        ConnectionRoom.add(ConnectionRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
 
         getContentPane().add(ConnectionRoom, "card2");
 
@@ -362,7 +439,7 @@ public class Client extends javax.swing.JFrame {
         WaitingRoomPane.setViewportView(WaitingPlayers);
 
         WaitingRoom.add(WaitingRoomPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 370, 210));
-        WaitingRoom.add(WaitingRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1610));
+        WaitingRoom.add(WaitingRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
 
         getContentPane().add(WaitingRoom, "card2");
 
@@ -424,7 +501,7 @@ public class Client extends javax.swing.JFrame {
         CurrentScoreboardPane.setViewportView(CurrentScoresText);
 
         RoundPanel.add(CurrentScoreboardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 340, 260, 280));
-        RoundPanel.add(RoundBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -270, 2570, 1620));
+        RoundPanel.add(RoundBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
 
         getContentPane().add(RoundPanel, "card2");
 

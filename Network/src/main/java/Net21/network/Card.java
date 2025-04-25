@@ -78,4 +78,8 @@ private ImageIcon createBlankCard() {
     public int getValue(){
         return value;
     }
+    
+    public String getImagePath(){
+        return path;
+    }
 }
