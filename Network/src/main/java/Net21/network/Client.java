@@ -55,7 +55,7 @@ public class Client extends javax.swing.JFrame {
     private void initBackgroundImages() {
         try {
             // Load the image from resources
-            ImageIcon waitingRoom = new ImageIcon(getClass().getResource("/images/Majlis.jpg"));
+            /*ImageIcon waitingRoom = new ImageIcon(getClass().getResource("/images/Majlis.jpg"));
 
             // Scale the image to fit the label if needed
             Image majlis = waitingRoom.getImage();
@@ -69,7 +69,7 @@ public class Client extends javax.swing.JFrame {
             Image seeb = connectedRoom.getImage();
             Image scaledSeeb = seeb.getScaledInstance(ConnectionRoomBG.getWidth(), ConnectionRoomBG.getHeight(), Image.SCALE_SMOOTH);
             
-            ConnectionRoomBG.setIcon(new ImageIcon(scaledSeeb));
+            ConnectionRoomBG.setIcon(new ImageIcon(scaledSeeb));*/
             
             
             ImageIcon round = new ImageIcon(getClass().getResource("/images/Carpet.jpg"));
@@ -78,14 +78,17 @@ public class Client extends javax.swing.JFrame {
             
             //RoundBG.setIcon(new ImageIcon(scaledCarpet));
             LeaderboardBG.setIcon(new ImageIcon(scaledCarpet));
+            WaitingRoomBG.setIcon(new ImageIcon(scaledCarpet));
+            ConnectionRoomBG.setIcon(new ImageIcon(scaledCarpet));
+            UsernameBG.setIcon(new ImageIcon(scaledCarpet));
             
             
             
-            ImageIcon usernamebg = new ImageIcon(getClass().getResource("/images/Door.jpg"));
+            /*ImageIcon usernamebg = new ImageIcon(getClass().getResource("/images/Door.jpg"));
             Image door = usernamebg.getImage();
             Image scaledDoor = door.getScaledInstance(UsernameBG.getWidth(), UsernameBG.getHeight(), Image.SCALE_SMOOTH);
             
-            UsernameBG.setIcon(new ImageIcon(scaledDoor));
+            UsernameBG.setIcon(new ImageIcon(scaledDoor));*/
             
             
             
@@ -248,6 +251,10 @@ public class Client extends javax.swing.JFrame {
             } else if (message.startsWith("00:")) {
                 Timer.setText("");
                 Timer.setText(message);
+                if(message.equalsIgnoreCase("00:00")){
+                    Timer.setText("");
+                    Timer.setText("Setting up...");
+                }
             } else if (message.startsWith("Cannot join game at this time.")) {
                 javax.swing.JOptionPane.showMessageDialog(this, message);
                 ConnectionRoom.setVisible(true);
