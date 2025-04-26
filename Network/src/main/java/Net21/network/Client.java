@@ -22,10 +22,10 @@ public class Client extends javax.swing.JFrame {
 
     public Client() {
         initComponents();
-        // Remove and re-add BackOfCardLabel to make sure it's above background
+        
 RoundPanel.remove(BackOfCardLabel);
 RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
-        430, 230, 150, 200), 0);  // The 0 makes it top-most in z-order
+        430, 230, 150, 200), 0);  
          BackOfCardLabel.setPreferredSize(new Dimension(150, 200));
     BackOfCardLabel.setMinimumSize(new Dimension(150, 200));
     BackOfCardLabel.setSize(new Dimension(150, 200));
@@ -33,8 +33,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
      RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
             840, 310, 150, 200));
         initBackgroundImages();
-        //   ImageIcon testIcon = new ImageIcon(getClass().getResource("/images/Clubs/1.jpg"));
-// JOptionPane.showMessageDialog(this, "Test Image", "Test", JOptionPane.INFORMATION_MESSAGE, testIcon);
+      
        
         UsernamePanel.setVisible(true);
         ConnectionRoom.setVisible(false);
@@ -43,7 +42,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
         LeaderBoardPanel.setVisible(false);
 
         ConnectButton.addActionListener(evt -> connectToServer());
-        JoinButton.addActionListener(evt -> joinWaitingRoom()); // Action for joinButton in ConnectedRoom
+        JoinButton.addActionListener(evt -> joinWaitingRoom()); 
 
         HitButton.addActionListener(evt -> hit());
         PassButton.addActionListener(evt -> pass());
@@ -53,29 +52,29 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
               revalidate();
     repaint();
 
-        // Add a window listener to handle the close operation
+       
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 sendExitMessage();
-                System.exit(0); // Close the application
+                System.exit(0); 
             }
         });
     }
 
    private void initBackgroundImages() {
     try {
-        // Load carpet image for all backgrounds
+        
         ImageIcon carpetIcon = new ImageIcon(getClass().getResource("/images/Carpet.jpg"));
         Image carpetImage = carpetIcon.getImage();
         
-        // Scale for each panel
+       
         Image scaledCarpetRound = carpetImage.getScaledInstance(
             RoundBG.getWidth() > 0 ? RoundBG.getWidth() : 1440, 
             RoundBG.getHeight() > 0 ? RoundBG.getHeight() : 800, 
             Image.SCALE_SMOOTH);
         
-        // Set backgrounds for all panels
+        
         RoundBG.setIcon(new ImageIcon(scaledCarpetRound));
         LeaderboardBG.setIcon(new ImageIcon(scaledCarpetRound));
         WaitingRoomBG.setIcon(new ImageIcon(scaledCarpetRound));
@@ -90,7 +89,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
 
     private void sendExitMessage() {
         if (out != null) {
-            out.println("exit"); // Send exit message to the server
+            out.println("exit"); 
         }
     }
 
@@ -104,7 +103,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
 
         try {
             socket = new Socket("localhost", 2121);
-            out = new PrintWriter(socket.getOutputStream(), true); // Auto flush
+            out = new PrintWriter(socket.getOutputStream(), true); 
 
             out.println(username);
             new Thread(new Listener(socket, this)).start();
@@ -121,7 +120,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
 
     public void joinWaitingRoom() {
 
-        out.println("join"); // Send "join" message to the server
+        out.println("join"); 
 
         System.out.println("Switching to WaitingPlayers panel...");
         ConnectionRoom.setVisible(false);
@@ -141,20 +140,20 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
 
   private void displayPrivateCard(Card card) {
     try {
-        // Get the card image from the Card object
+        
         ImageIcon cardIcon = card.getImage();
         
-        // Set the card icon
+       
         BackOfCardLabel.setIcon(cardIcon);
         
-        // Make sure the label is visible and properly sized
+        
         BackOfCardLabel.setVisible(true);
         BackOfCardLabel.setOpaque(true);
         
-        // Bring the card label to the front
+        
         RoundPanel.setComponentZOrder(BackOfCardLabel, 0);
         
-        // Force repaint to make sure the card appears
+        
         BackOfCardLabel.revalidate();
         BackOfCardLabel.repaint();
         RoundPanel.revalidate();
@@ -167,34 +166,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
     }
 }
     
-    /*private void displayPrivateCard(Card card) {
-    try {
-        // Load the card image
-        ImageIcon cardIcon = new ImageIcon(getClass().getResource(card.getImagePath()));
-        
-        // Scale the image if needed (optional)
-        Image image = cardIcon.getImage();
-        Image scaledImage = image.getScaledInstance(
-            BackOfCardLabel.getWidth(),
-            BackOfCardLabel.getHeight(),
-            Image.SCALE_SMOOTH
-        );
-        
-        // Set the icon
-        BackOfCardLabel.setIcon(new ImageIcon(scaledImage));
-        BackOfCardLabel.revalidate();
-        BackOfCardLabel.repaint();
-        
-        System.out.println("Card displayed: " + card.getImagePath());
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("Error loading card image: " + card.getImagePath());
-        // Fallback - display a blank card or placeholder
-        BackOfCardLabel.setIcon(null);
-        BackOfCardLabel.setBackground(Color.BLUE); // Example fallback
-        BackOfCardLabel.setOpaque(true);
-    }
-}*/
+   
 
     public void pass() {
         out.println("Pass");
@@ -203,35 +175,25 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
         System.out.println("Pass button clicked");
     }
 
-    /*public void LeaveGame(){
-            out.println("leave game");
-            RoundPanel.setVisible(false);
-            ConnectionRoom.setVisible(true);
-            NewGameButton.setVisible(false);
-            WinnersPanel.setVisible(false);
-            LeaderBoardLabel.setVisible(false);
-            
-        }*/
     public void LeaveGame() {
         out.println("leave game");
 
-        // Hide game-related panels
+        
         RoundPanel.setVisible(false);
         LeaderBoardPanel.setVisible(false);
         WinnersPanel.setVisible(false);
 
-        // Show ConnectionRoom and ALL its components
+        
         ConnectionRoom.setVisible(true);
-        ConnectionRoomLabel.setVisible(true);  // Make sure label is visible
-        JoinButton.setVisible(true);          // Make sure button is visible
-        ConnectedPlayerPane.setVisible(true); // Make sure player list is visible
-
-        // Reset game state UI elements
+        ConnectionRoomLabel.setVisible(true);  
+        JoinButton.setVisible(true);         
+        ConnectedPlayerPane.setVisible(true); 
+        
         NewGameButton.setVisible(false);
         HitButton.setEnabled(true);
         PassButton.setEnabled(true);
 
-        // If using CardLayout, you might need to call revalidate/repaint
+        
         ConnectionRoom.revalidate();
         ConnectionRoom.repaint();
     }
@@ -240,17 +202,17 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
         SwingUtilities.invokeLater(() -> {
             System.out.println("Received message: " + message);
 
-            // Handle message for "Waiting Players:"
+           
             if (message.startsWith("Waiting Players:")) {
-                WaitingRoom.setVisible(true); // Make sure the panel is visible now
+                WaitingRoom.setVisible(true); 
                 WaitingRoomLabel.setVisible(true);
-                WaitingPlayers.setText(""); // Clear the previous list
+                WaitingPlayers.setText(""); 
 
-                // Extract the part after "Waiting Players:\n"
+               
                 String playerList = message.substring("Waiting Players: ".length());
                 playerList = playerList.replace(" ", "\n");
 
-                WaitingPlayers.setText(playerList); // Update the text area with the player names
+                WaitingPlayers.setText(playerList); 
                 WaitingPlayers.setCaretPosition(WaitingPlayers.getDocument().getLength());
             } else if (message.startsWith("00:")) {
                 Timer.setText("");
@@ -263,12 +225,12 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 javax.swing.JOptionPane.showMessageDialog(this, message);
                 ConnectionRoom.setVisible(true);
                 WaitingRoom.setVisible(false);
-            } // Handle other types of messages (e.g., connected players, etc.)
+            } 
             else if (message.startsWith("Connected Players:")) {
                 ConnectedPlayers.setText("");
                 String displayMessage = message.substring("Connected Players: ".length());
                 displayMessage = displayMessage.replace(" ", "\n");
-                //ConnectedPlayers.append(displayMessage);
+               
                 ConnectedPlayers.setText(displayMessage);
                 ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
                 ConnectionRoom.revalidate();
@@ -318,7 +280,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 WinnersPanel.setVisible(true);
 
             } else if (message.startsWith("Card:")) {
-                // Example message format: "Card:Hearts:Ace:1:images/Hearts/Ace"
+                
                 String[] parts = message.split(":");
                 Card drawnCard = new Card(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4]);
                 displayPrivateCard(drawnCard);
@@ -326,14 +288,12 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 Timer.setText("");
                 Timer.setText("...خلط");
             }
-            /*else { 
-                                ConnectedPlayers.append(message + "\n");
-                        }*/
+            
         });
     }
     
 private void ensureBackgroundAtBottom() {
-    // This will send the background to the back in each panel
+   
     if (RoundBG != null) RoundPanel.setComponentZOrder(RoundBG, RoundPanel.getComponentCount() - 1);
     if (LeaderboardBG != null) LeaderBoardPanel.setComponentZOrder(LeaderboardBG, LeaderBoardPanel.getComponentCount() - 1);
     if (WaitingRoomBG != null) WaitingRoom.setComponentZOrder(WaitingRoomBG, WaitingRoom.getComponentCount() - 1);
@@ -342,10 +302,10 @@ private void ensureBackgroundAtBottom() {
     
     
 }
-// In Client.java, add this method to load the back of card image when a round starts
+
 private void displayBackOfCard() {
     try {
-        // Try to load from resources first
+        
         InputStream imgStream = getClass().getResourceAsStream("/images/backofcard.jpeg");
         ImageIcon cardBack = null;
         
@@ -357,7 +317,7 @@ private void displayBackOfCard() {
                 System.out.println("Successfully loaded back of card image");
             }
         } else {
-            // If resource not found, try with File
+            
             File imgFile = new File(System.getProperty("user.dir") + "/images/backofcard.jpeg");
             if (imgFile.exists()) {
                 BufferedImage img = ImageIO.read(imgFile);
@@ -366,34 +326,30 @@ private void displayBackOfCard() {
             }
         }
         
-        // Set the card back image
+     
         if (cardBack != null) {
             BackOfCardLabel.setIcon(cardBack);
-        } else { //remove this later
-            // Create a blank placeholder if image couldn't be loaded
+        } else { 
+        
           
         }
         
-        // Make sure the label is visible
+        
         BackOfCardLabel.setVisible(true);
         
     } catch (Exception e) {
         System.err.println("Failed loading back of card image: " + e.getMessage());
     }}
-// Helper method for scaling images
+
 private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
     java.awt.Image img = icon.getImage();
     java.awt.Image scaledImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
     return new ImageIcon(scaledImg);
 }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+   
     private void initComponents() {
 
         RoundPanel = new javax.swing.JPanel();
@@ -613,33 +569,29 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
         getContentPane().add(UsernamePanel, "card2");
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UsernameFieldActionPerformed
+    private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {
+       
+    }
 
-    private void LeaveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeaveGameButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LeaveGameButtonActionPerformed
+    private void LeaveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+       
+    }
 
-    private void PassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PassButtonActionPerformed
+    private void PassButtonActionPerformed(java.awt.event.ActionEvent evt) {
+       
+    }
 
-    private void HitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HitButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_HitButtonActionPerformed
+    private void HitButtonActionPerformed(java.awt.event.ActionEvent evt) {
+       
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -656,9 +608,9 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+     
 
-        /* Create and display the form */
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Client().setVisible(true);
@@ -666,7 +618,7 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+   
     private javax.swing.JLabel BackOfCardLabel;
     private javax.swing.JButton ConnectButton;
     private javax.swing.JScrollPane ConnectedPlayerPane;
@@ -704,5 +656,5 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
     private javax.swing.JScrollPane WaitingRoomPane;
     private javax.swing.JScrollPane WinnersPanel;
     private javax.swing.JTextArea WinnersTextArea;
-    // End of variables declaration//GEN-END:variables
+    
 }

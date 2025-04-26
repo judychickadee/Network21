@@ -44,7 +44,7 @@ public class ClientHandler implements Runnable{
             Server.broadcastClients();
 
             while (true) {
-                String message = in.readLine(); // Read user input for the message
+                String message = in.readLine(); 
                 if (message.equalsIgnoreCase("exit")) { 
                     removeClient();
                     out.println("Client left.");
@@ -91,7 +91,7 @@ public class ClientHandler implements Runnable{
         Server.broadcastClients();
         Server.broadcastWaitingRoom();
         if (Server.waitingRoom.isEmpty()){
-            Server.endGame(); // resets timer
+            Server.endGame(); 
         }
     }
     

@@ -22,16 +22,14 @@ class Listener implements Runnable {
     public void run() {
         try {
             String serverMessage;
-            //System.out.println("Listening");
-            //serverMessage = in.readLine();
-            //System.out.println(serverMessage);
+            
             while ((serverMessage = in.readLine()) != null) {
                 if (serverMessage.trim().isEmpty()){
                     continue;
                 }
                 System.out.println("Received from server: " + serverMessage);
                 client.handleMessage(serverMessage);
-                //System.out.println("Server: " + serverMessage);
+               
             }
         } catch (IOException e) {
             e.printStackTrace();

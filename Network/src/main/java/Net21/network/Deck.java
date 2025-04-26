@@ -27,7 +27,7 @@ public class Deck {
 
     public synchronized Card drawCard() {
         if (cards.isEmpty()) {
-            initializeDeck(); // Replenish if empty
+            initializeDeck(); 
             shuffle();
         }
         return cards.remove(0);
