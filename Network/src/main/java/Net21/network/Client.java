@@ -2,12 +2,15 @@ package Net21.network;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.*;
 import java.net.Socket;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class Client extends javax.swing.JFrame {
 
@@ -289,6 +292,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 WaitingRoom.setVisible(false);
                 RoundPanel.setVisible(true);
                 NewGameButton.setVisible(false);
+                  displayBackOfCard();
 
             } else if (message.startsWith("Points")) {
                 String score = message.substring("Points".length());
@@ -335,6 +339,52 @@ private void ensureBackgroundAtBottom() {
     if (WaitingRoomBG != null) WaitingRoom.setComponentZOrder(WaitingRoomBG, WaitingRoom.getComponentCount() - 1);
     if (ConnectionRoomBG != null) ConnectionRoom.setComponentZOrder(ConnectionRoomBG, ConnectionRoom.getComponentCount() - 1);
     if (UsernameBG != null) UsernamePanel.setComponentZOrder(UsernameBG, UsernamePanel.getComponentCount() - 1);
+    
+    
+}
+// In Client.java, add this method to load the back of card image when a round starts
+private void displayBackOfCard() {
+    try {
+        // Try to load from resources first
+        InputStream imgStream = getClass().getResourceAsStream("/images/backofcard.jpeg");
+        ImageIcon cardBack = null;
+        
+        if (imgStream != null) {
+            BufferedImage img = ImageIO.read(imgStream);
+            if (img != null) {
+                cardBack = scaleImage(new ImageIcon(img), 150, 200);
+                imgStream.close();
+                System.out.println("Successfully loaded back of card image");
+            }
+        } else {
+            // If resource not found, try with File
+            File imgFile = new File(System.getProperty("user.dir") + "/images/backofcard.jpeg");
+            if (imgFile.exists()) {
+                BufferedImage img = ImageIO.read(imgFile);
+                cardBack = scaleImage(new ImageIcon(img), 150, 200);
+                System.out.println("Successfully loaded back of card from file");
+            }
+        }
+        
+        // Set the card back image
+        if (cardBack != null) {
+            BackOfCardLabel.setIcon(cardBack);
+        } else { //remove this later
+            // Create a blank placeholder if image couldn't be loaded
+          
+        }
+        
+        // Make sure the label is visible
+        BackOfCardLabel.setVisible(true);
+        
+    } catch (Exception e) {
+        System.err.println("Failed loading back of card image: " + e.getMessage());
+    }}
+// Helper method for scaling images
+private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
+    java.awt.Image img = icon.getImage();
+    java.awt.Image scaledImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+    return new ImageIcon(scaledImg);
 }
 
     /**
