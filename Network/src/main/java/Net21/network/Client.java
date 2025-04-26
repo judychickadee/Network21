@@ -368,25 +368,25 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
         LeaveGameButton = new javax.swing.JButton();
         CurrentScoreBoardLabel = new javax.swing.JLabel();
         CurrentScoreboardPane = new javax.swing.JScrollPane();
-        CurrentScoresText = new javax.swing.JTextArea();
+        CurrentScoresText = new javax.swing.JTextArea() {{     setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT); }};
         RoundBG = new javax.swing.JLabel();
         ConnectionRoom = new javax.swing.JPanel();
         ConnectionRoomLabel = new javax.swing.JLabel();
         JoinButton = new javax.swing.JButton();
         ConnectedPlayerPane = new javax.swing.JScrollPane();
-        ConnectedPlayers = new javax.swing.JTextArea();
+        ConnectedPlayers = new javax.swing.JTextArea() {{     setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT); }};
         ConnectionRoomBG = new javax.swing.JLabel();
         WaitingRoom = new javax.swing.JPanel();
         WaitingRoomLabel = new javax.swing.JLabel();
         Timer = new javax.swing.JLabel();
         WaitingRoomPane = new javax.swing.JScrollPane();
-        WaitingPlayers = new javax.swing.JTextArea();
+        WaitingPlayers = new javax.swing.JTextArea() {{     setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT); }};
         WaitingRoomBG = new javax.swing.JLabel();
         LeaderBoardPanel = new javax.swing.JPanel();
         LeaderBoardLabel = new javax.swing.JLabel();
         NewGameButton = new javax.swing.JButton();
         WinnersPanel = new javax.swing.JScrollPane();
-        WinnersTextArea = new javax.swing.JTextArea();
+        WinnersTextArea = new javax.swing.JTextArea() {{     setComponentOrientation(java.awt.ComponentOrientation.RIGHT_TO_LEFT); }};
         LeaderboardBG = new javax.swing.JLabel();
         UsernamePanel = new javax.swing.JPanel();
         GameName = new javax.swing.JLabel();
@@ -569,7 +569,7 @@ private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
         UsernamePrompt.setText("ادخل اسم اللاعب:");
         UsernamePanel.add(UsernamePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 270, 30));
 
-        UsernameField.setFont(new java.awt.Font("Waseem", 0, 14)); // NOI18N
+        UsernameField.setFont(new java.awt.Font("Waseem", 0, 18)); // NOI18N
         UsernameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         UsernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
