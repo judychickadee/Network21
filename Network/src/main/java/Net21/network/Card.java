@@ -50,8 +50,7 @@ class Card {
         }
     } catch (Exception e) {
         System.err.println("Failed loading " + path + ": " + e.getMessage());
-        // Create a fallback image that shows the card info
-        this.image = createBlankCard();
+        
     }
 }
   private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
@@ -60,16 +59,6 @@ class Card {
     return new ImageIcon(scaledImg);
 }
 
-private ImageIcon createBlankCard() {
-    BufferedImage img = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
-    Graphics2D g = img.createGraphics();
-    g.setColor(Color.WHITE);
-    g.fillRect(0, 0, 150, 200);
-    g.setColor(Color.BLACK);
-    g.drawString(rank + " of " + suit, 10, 20);
-    g.dispose();
-    return new ImageIcon(img);
-}
 
     @Override
     public String toString() {
