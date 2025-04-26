@@ -28,7 +28,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
     BackOfCardLabel.setSize(new Dimension(150, 200));
     BackOfCardLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 1));
      RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
-            430, 230, 150, 200));
+            430, 320, 150, 200));
         initBackgroundImages();
         //   ImageIcon testIcon = new ImageIcon(getClass().getResource("/images/Clubs/1.jpg"));
 // JOptionPane.showMessageDialog(this, "Test Image", "Test", JOptionPane.INFORMATION_MESSAGE, testIcon);
@@ -254,7 +254,7 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 Timer.setText(message);
                 if(message.equalsIgnoreCase("00:00")){
                     Timer.setText("");
-                    Timer.setText("Setting up...");
+                    Timer.setText("خلط...");
                 }
             } else if (message.startsWith("Cannot join game at this time.")) {
                 javax.swing.JOptionPane.showMessageDialog(this, message);
@@ -270,10 +270,22 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 ConnectedPlayers.setCaretPosition(ConnectedPlayers.getDocument().getLength());
                 ConnectionRoom.revalidate();
             } else if (message.startsWith("Round ")) {
+                String round;
+                if(message.equalsIgnoreCase("Round 1")){
+                    round = "الشوط الاول";
+                } else if (message.equalsIgnoreCase("Round 2")){
+                    round = "الشوط الثاني";
+                }else if (message.equalsIgnoreCase("Round 3")){
+                    round = "الشوط الثالث";
+                }else if (message.equalsIgnoreCase("Round 4")){
+                    round = "الشوط الرابع";
+                } else{
+                    round = "الشوط الخامس";
+                }
                 HitButton.setEnabled(true);
                 PassButton.setEnabled(true);
                 RoundNumberLabel.setText("");
-                RoundNumberLabel.setText(message);
+                RoundNumberLabel.setText(round);
                 WaitingRoom.setVisible(false);
                 RoundPanel.setVisible(true);
                 NewGameButton.setVisible(false);
@@ -306,6 +318,9 @@ RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraint
                 String[] parts = message.split(":");
                 Card drawnCard = new Card(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4]);
                 displayPrivateCard(drawnCard);
+            } else if(message.startsWith("start")){
+                Timer.setText("");
+                Timer.setText("...خلط");
             }
             /*else { 
                                 ConnectedPlayers.append(message + "\n");
@@ -331,30 +346,6 @@ private void ensureBackgroundAtBottom() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        LeaderBoardPanel = new javax.swing.JPanel();
-        LeaderBoardLabel = new javax.swing.JLabel();
-        NewGameButton = new javax.swing.JButton();
-        WinnersPanel = new javax.swing.JScrollPane();
-        WinnersTextArea = new javax.swing.JTextArea();
-        LeaderboardBG = new javax.swing.JLabel();
-        UsernamePanel = new javax.swing.JPanel();
-        GameName = new javax.swing.JLabel();
-        UsernamePrompt = new javax.swing.JLabel();
-        UsernameField = new javax.swing.JTextField();
-        ConnectButton = new javax.swing.JButton();
-        UsernameBG = new javax.swing.JLabel();
-        ConnectionRoom = new javax.swing.JPanel();
-        ConnectionRoomLabel = new javax.swing.JLabel();
-        JoinButton = new javax.swing.JButton();
-        ConnectedPlayerPane = new javax.swing.JScrollPane();
-        ConnectedPlayers = new javax.swing.JTextArea();
-        ConnectionRoomBG = new javax.swing.JLabel();
-        WaitingRoom = new javax.swing.JPanel();
-        WaitingRoomLabel = new javax.swing.JLabel();
-        Timer = new javax.swing.JLabel();
-        WaitingRoomPane = new javax.swing.JScrollPane();
-        WaitingPlayers = new javax.swing.JTextArea();
-        WaitingRoomBG = new javax.swing.JLabel();
         RoundPanel = new javax.swing.JPanel();
         RoundNumberLabel = new javax.swing.JLabel();
         RoundTimerLabel = new javax.swing.JLabel();
@@ -368,6 +359,163 @@ private void ensureBackgroundAtBottom() {
         CurrentScoreboardPane = new javax.swing.JScrollPane();
         CurrentScoresText = new javax.swing.JTextArea();
         RoundBG = new javax.swing.JLabel();
+        ConnectionRoom = new javax.swing.JPanel();
+        ConnectionRoomLabel = new javax.swing.JLabel();
+        JoinButton = new javax.swing.JButton();
+        ConnectedPlayerPane = new javax.swing.JScrollPane();
+        ConnectedPlayers = new javax.swing.JTextArea();
+        ConnectionRoomBG = new javax.swing.JLabel();
+        WaitingRoom = new javax.swing.JPanel();
+        WaitingRoomLabel = new javax.swing.JLabel();
+        Timer = new javax.swing.JLabel();
+        WaitingRoomPane = new javax.swing.JScrollPane();
+        WaitingPlayers = new javax.swing.JTextArea();
+        WaitingRoomBG = new javax.swing.JLabel();
+        LeaderBoardPanel = new javax.swing.JPanel();
+        LeaderBoardLabel = new javax.swing.JLabel();
+        NewGameButton = new javax.swing.JButton();
+        WinnersPanel = new javax.swing.JScrollPane();
+        WinnersTextArea = new javax.swing.JTextArea();
+        LeaderboardBG = new javax.swing.JLabel();
+        UsernamePanel = new javax.swing.JPanel();
+        GameName = new javax.swing.JLabel();
+        UsernamePrompt = new javax.swing.JLabel();
+        UsernameField = new javax.swing.JTextField();
+        ConnectButton = new javax.swing.JButton();
+        UsernameBG = new javax.swing.JLabel();
+
+        RoundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        RoundNumberLabel.setFont(new java.awt.Font("Waseem", 0, 48)); // NOI18N
+        RoundNumberLabel.setForeground(new java.awt.Color(255, 255, 255));
+        RoundNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RoundNumberLabel.setText("الشوط");
+        RoundNumberLabel.setToolTipText("");
+        RoundPanel.add(RoundNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 240, 40));
+
+        RoundTimerLabel.setForeground(new java.awt.Color(255, 255, 255));
+        RoundTimerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RoundPanel.add(RoundTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 100, 30));
+
+        BackOfCardLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 150, 200));
+
+        PassButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        PassButton.setText("تمرير");
+        PassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassButtonActionPerformed(evt);
+            }
+        });
+        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 550, 110, 40));
+
+        HitButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        HitButton.setText("ضربه");
+        HitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HitButtonActionPerformed(evt);
+            }
+        });
+        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 550, 110, 40));
+
+        CurrentScoreLabel.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        CurrentScoreLabel.setForeground(new java.awt.Color(255, 255, 255));
+        CurrentScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CurrentScoreLabel.setText("النقاط");
+        RoundPanel.add(CurrentScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 170, 150, 50));
+
+        CurrentScore.setBackground(new java.awt.Color(255, 255, 255));
+        CurrentScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CurrentScore.setText("0");
+        CurrentScore.setOpaque(true);
+        RoundPanel.add(CurrentScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 230, 130, 40));
+
+        LeaveGameButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        LeaveGameButton.setText("ترك اللعبة");
+        LeaveGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeaveGameButtonActionPerformed(evt);
+            }
+        });
+        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 610, 110, 40));
+
+        CurrentScoreBoardLabel.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        CurrentScoreBoardLabel.setForeground(new java.awt.Color(255, 255, 255));
+        CurrentScoreBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CurrentScoreBoardLabel.setText("النتائج");
+        RoundPanel.add(CurrentScoreBoardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 290, 150, 40));
+
+        CurrentScoresText.setEditable(false);
+        CurrentScoresText.setColumns(20);
+        CurrentScoresText.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        CurrentScoresText.setRows(5);
+        CurrentScoreboardPane.setViewportView(CurrentScoresText);
+
+        RoundPanel.add(CurrentScoreboardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 340, 260, 280));
+        RoundPanel.add(RoundBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
+
+        ConnectionRoom.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ConnectionRoomLabel.setFont(new java.awt.Font("Waseem", 0, 100)); // NOI18N
+        ConnectionRoomLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ConnectionRoomLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ConnectionRoomLabel.setText("غرفة الاتصال");
+        ConnectionRoom.add(ConnectionRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, -1, -1));
+
+        JoinButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        JoinButton.setText("انضم");
+        ConnectionRoom.add(JoinButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 570, 110, 40));
+
+        ConnectedPlayers.setEditable(false);
+        ConnectedPlayers.setColumns(20);
+        ConnectedPlayers.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        ConnectedPlayers.setRows(5);
+        ConnectedPlayerPane.setViewportView(ConnectedPlayers);
+
+        ConnectionRoom.add(ConnectedPlayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, 400, 210));
+        ConnectionRoom.add(ConnectionRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
+
+        WaitingRoom.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WaitingRoomLabel.setFont(new java.awt.Font("Waseem", 0, 100)); // NOI18N
+        WaitingRoomLabel.setForeground(new java.awt.Color(255, 255, 255));
+        WaitingRoomLabel.setText("غرفة الانتظار");
+        WaitingRoom.add(WaitingRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, -1, -1));
+
+        Timer.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        Timer.setForeground(new java.awt.Color(255, 255, 255));
+        Timer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        WaitingRoom.add(Timer, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 340, 80, 30));
+
+        WaitingPlayers.setEditable(false);
+        WaitingPlayers.setColumns(20);
+        WaitingPlayers.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        WaitingPlayers.setRows(5);
+        WaitingRoomPane.setViewportView(WaitingPlayers);
+
+        WaitingRoom.add(WaitingRoomPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, 370, 210));
+        WaitingRoom.add(WaitingRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
+
+        LeaderBoardPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LeaderBoardLabel.setFont(new java.awt.Font("Waseem", 0, 100)); // NOI18N
+        LeaderBoardLabel.setForeground(new java.awt.Color(255, 255, 255));
+        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LeaderBoardLabel.setText("النتائج");
+        LeaderBoardPanel.add(LeaderBoardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 300, 110));
+
+        NewGameButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        NewGameButton.setText("لعبة جديدة");
+        LeaderBoardPanel.add(NewGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 110, 40));
+
+        WinnersTextArea.setEditable(false);
+        WinnersTextArea.setColumns(20);
+        WinnersTextArea.setFont(new java.awt.Font("Waseem", 0, 18)); // NOI18N
+        WinnersTextArea.setRows(5);
+        WinnersPanel.setViewportView(WinnersTextArea);
+
+        LeaderBoardPanel.add(WinnersPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, 360, 200));
+        LeaderBoardPanel.add(LeaderboardBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("21");
@@ -376,151 +524,35 @@ private void ensureBackgroundAtBottom() {
         setSize(new java.awt.Dimension(2560, 1600));
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        LeaderBoardPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        LeaderBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        LeaderBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LeaderBoardLabel.setText("Winners");
-        LeaderBoardPanel.add(LeaderBoardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 110, 30));
-
-        NewGameButton.setText("New Game");
-        LeaderBoardPanel.add(NewGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 110, 40));
-
-        WinnersTextArea.setEditable(false);
-        WinnersTextArea.setColumns(20);
-        WinnersTextArea.setRows(5);
-        WinnersPanel.setViewportView(WinnersTextArea);
-
-        LeaderBoardPanel.add(WinnersPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 360, 200));
-        LeaderBoardPanel.add(LeaderboardBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
-
-        getContentPane().add(LeaderBoardPanel, "card2");
-
         UsernamePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        GameName.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        GameName.setFont(new java.awt.Font("Waseem", 0, 100)); // NOI18N
+        GameName.setForeground(new java.awt.Color(255, 255, 255));
         GameName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        GameName.setText("21");
-        UsernamePanel.add(GameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 220, -1, -1));
+        GameName.setText("٢١");
+        UsernamePanel.add(GameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));
 
+        UsernamePrompt.setFont(new java.awt.Font("Waseem", 0, 36)); // NOI18N
+        UsernamePrompt.setForeground(new java.awt.Color(255, 255, 255));
         UsernamePrompt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        UsernamePrompt.setText("Please enter your username:");
-        UsernamePanel.add(UsernamePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, 270, 30));
+        UsernamePrompt.setText("ادخل اسم اللاعب:");
+        UsernamePanel.add(UsernamePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 270, 30));
 
+        UsernameField.setFont(new java.awt.Font("Waseem", 0, 18)); // NOI18N
         UsernameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         UsernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsernameFieldActionPerformed(evt);
             }
         });
-        UsernamePanel.add(UsernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 340, 300, 30));
+        UsernamePanel.add(UsernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, 300, 40));
 
-        ConnectButton.setText("Connect");
-        UsernamePanel.add(ConnectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
+        ConnectButton.setFont(new java.awt.Font("Waseem", 0, 24)); // NOI18N
+        ConnectButton.setText("اتصل");
+        UsernamePanel.add(ConnectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, 100, 40));
         UsernamePanel.add(UsernameBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
 
         getContentPane().add(UsernamePanel, "card2");
-
-        ConnectionRoom.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        ConnectionRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        ConnectionRoomLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ConnectionRoomLabel.setText("Connected Room");
-        ConnectionRoom.add(ConnectionRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, -1, -1));
-
-        JoinButton.setText("Join");
-        ConnectionRoom.add(JoinButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 560, 110, 30));
-
-        ConnectedPlayers.setEditable(false);
-        ConnectedPlayers.setColumns(20);
-        ConnectedPlayers.setRows(5);
-        ConnectedPlayerPane.setViewportView(ConnectedPlayers);
-
-        ConnectionRoom.add(ConnectedPlayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 400, 210));
-        ConnectionRoom.add(ConnectionRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
-
-        getContentPane().add(ConnectionRoom, "card2");
-
-        WaitingRoom.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        WaitingRoomLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        WaitingRoomLabel.setText("Waiting Room");
-        WaitingRoom.add(WaitingRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 240, -1, -1));
-
-        Timer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WaitingRoom.add(Timer, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 290, 80, 30));
-
-        WaitingPlayers.setEditable(false);
-        WaitingPlayers.setColumns(20);
-        WaitingPlayers.setRows(5);
-        WaitingRoomPane.setViewportView(WaitingPlayers);
-
-        WaitingRoom.add(WaitingRoomPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 370, 210));
-        WaitingRoom.add(WaitingRoomBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 800));
-
-        getContentPane().add(WaitingRoom, "card2");
-
-        RoundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        RoundNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        RoundNumberLabel.setText("Round");
-        RoundPanel.add(RoundNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, 20));
-
-        RoundTimerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        RoundPanel.add(RoundTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 100, 30));
-
-        BackOfCardLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 150, 200));
-
-        PassButton.setText("Pass");
-        PassButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PassButtonActionPerformed(evt);
-            }
-        });
-        RoundPanel.add(PassButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 510, 110, 40));
-
-        HitButton.setText("Hit");
-        HitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HitButtonActionPerformed(evt);
-            }
-        });
-        RoundPanel.add(HitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, 110, 40));
-
-        CurrentScoreLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        CurrentScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CurrentScoreLabel.setText("Score:");
-        RoundPanel.add(CurrentScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 150, 50));
-
-        CurrentScore.setBackground(new java.awt.Color(255, 255, 255));
-        CurrentScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CurrentScore.setText("0");
-        CurrentScore.setOpaque(true);
-        RoundPanel.add(CurrentScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 220, 120, 30));
-
-        LeaveGameButton.setText("Leave Game");
-        LeaveGameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LeaveGameButtonActionPerformed(evt);
-            }
-        });
-        RoundPanel.add(LeaveGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 600, 110, 40));
-
-        CurrentScoreBoardLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        CurrentScoreBoardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CurrentScoreBoardLabel.setText("Scoreboard:");
-        RoundPanel.add(CurrentScoreBoardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 270, 150, 40));
-
-        CurrentScoresText.setEditable(false);
-        CurrentScoresText.setColumns(20);
-        CurrentScoresText.setRows(5);
-        CurrentScoreboardPane.setViewportView(CurrentScoresText);
-
-        RoundPanel.add(CurrentScoreboardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 340, 260, 280));
-        RoundPanel.add(RoundBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 800));
-
-        getContentPane().add(RoundPanel, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

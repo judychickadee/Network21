@@ -118,7 +118,12 @@ public class Server {
         Server.broadcastWaitingRoom();
         if (Server.waitingRoom.size() >= 2 && !gameStarted) {
             if (Server.waitingRoom.size() == 4) {
+                for(ClientHandler player: waitingRoom){
+                    client.sendMessage("start");
+                }
+                roomTimer.cancel();
                 startGame();
+                
             } else {
                 if (roomTimer == null) {
                     roomTimer = new Timer();
