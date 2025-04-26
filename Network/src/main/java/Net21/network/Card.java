@@ -22,10 +22,10 @@ class Card {
     this.suit = suit;
     this.rank = rank;
     this.value = value;
-    this.path = path;
+    this.path = path; //to get pictures
       
     try {
-        // First try to load from resources
+        // First try to load from resources folder
         InputStream imgStream = getClass().getResourceAsStream(path);
         
         if (imgStream != null) {
@@ -53,7 +53,7 @@ class Card {
         
     }
 }
-  private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
+  private ImageIcon scaleImage(ImageIcon icon, int width, int height) { //help make sure the images are scaled
     java.awt.Image img = icon.getImage();
     java.awt.Image scaledImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
     return new ImageIcon(scaledImg);
