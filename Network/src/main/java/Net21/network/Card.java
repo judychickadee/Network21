@@ -18,42 +18,47 @@ class Card {
     String path;
     private ImageIcon image;
     
-   public Card(String suit, String rank, int value, String path) {
+ public Card(String suit, String rank, int value, String path) {
     this.suit = suit;
     this.rank = rank;
     this.value = value;
     this.path = path;
       
-   
-
     try {
-       
+        // First try to load from resources
         InputStream imgStream = getClass().getResourceAsStream(path);
-        
         
         if (imgStream != null) {
             BufferedImage img = ImageIO.read(imgStream);
-            if (img == null) {
-                throw new IOException("ImageIO.read returned null");
+            if (img != null) {
+                this.image = scaleImage(new ImageIcon(img), 150, 200);
+                imgStream.close();
+                System.out.println("Successfully loaded card: " + path);
+            } else {
+                throw new IOException("ImageIO.read returned null for " + path);
             }
-            this.image = scaleImage(new ImageIcon(img), 150, 200);
-            imgStream.close();
-            System.out.println("Successfully loaded: " + path);
         } else {
-            throw new FileNotFoundException("Resource not found");
+            // If resource not found, try with File
+            File imgFile = new File(System.getProperty("user.dir") + path);
+            if (imgFile.exists()) {
+                BufferedImage img = ImageIO.read(imgFile);
+                this.image = scaleImage(new ImageIcon(img), 150, 200);
+                System.out.println("Successfully loaded card from file: " + imgFile.getAbsolutePath());
+            } else {
+                throw new FileNotFoundException("Resource not found: " + path);
+            }
         }
     } catch (Exception e) {
         System.err.println("Failed loading " + path + ": " + e.getMessage());
+        // Create a fallback image that shows the card info
         this.image = createBlankCard();
     }
-    
 }
-   private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
+  private ImageIcon scaleImage(ImageIcon icon, int width, int height) {
     java.awt.Image img = icon.getImage();
     java.awt.Image scaledImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
     return new ImageIcon(scaledImg);
 }
-
 
 private ImageIcon createBlankCard() {
     BufferedImage img = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);

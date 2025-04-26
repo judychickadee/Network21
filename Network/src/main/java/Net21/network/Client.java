@@ -19,15 +19,20 @@ public class Client extends javax.swing.JFrame {
 
     public Client() {
         initComponents();
+        // Remove and re-add BackOfCardLabel to make sure it's above background
+RoundPanel.remove(BackOfCardLabel);
+RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
+        430, 230, 150, 200), 0);  // The 0 makes it top-most in z-order
+         BackOfCardLabel.setPreferredSize(new Dimension(150, 200));
+    BackOfCardLabel.setMinimumSize(new Dimension(150, 200));
+    BackOfCardLabel.setSize(new Dimension(150, 200));
+    BackOfCardLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 1));
+     RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
+            430, 230, 150, 200));
         initBackgroundImages();
         //   ImageIcon testIcon = new ImageIcon(getClass().getResource("/images/Clubs/1.jpg"));
 // JOptionPane.showMessageDialog(this, "Test Image", "Test", JOptionPane.INFORMATION_MESSAGE, testIcon);
-        BackOfCardLabel.setPreferredSize(new Dimension(150, 200));
-        BackOfCardLabel.setMinimumSize(new Dimension(150, 200));
-        BackOfCardLabel.setSize(new Dimension(150, 200));
-        RoundPanel.add(BackOfCardLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(
-                430, 230, 150, 200));
-
+       
         UsernamePanel.setVisible(true);
         ConnectionRoom.setVisible(false);
         WaitingRoom.setVisible(false);
@@ -41,6 +46,9 @@ public class Client extends javax.swing.JFrame {
         PassButton.addActionListener(evt -> pass());
         LeaveGameButton.addActionListener(evt -> LeaveGame());
         NewGameButton.addActionListener(evt -> LeaveGame());
+          ensureBackgroundAtBottom();
+              revalidate();
+    repaint();
 
         // Add a window listener to handle the close operation
         this.addWindowListener(new WindowAdapter() {
@@ -52,54 +60,30 @@ public class Client extends javax.swing.JFrame {
         });
     }
 
-    private void initBackgroundImages() {
-        try {
-            // Load the image from resources
-            /*ImageIcon waitingRoom = new ImageIcon(getClass().getResource("/images/Majlis.jpg"));
-
-            // Scale the image to fit the label if needed
-            Image majlis = waitingRoom.getImage();
-            Image scaledMajlis = majlis.getScaledInstance(WaitingRoomBG.getWidth(), WaitingRoomBG.getHeight(), Image.SCALE_SMOOTH);
-
-            // Set the icon
-            WaitingRoomBG.setIcon(new ImageIcon(scaledMajlis));
-            
-            
-            ImageIcon connectedRoom = new ImageIcon(getClass().getResource("/images/Seeb.jpg")); // Also Seeb2
-            Image seeb = connectedRoom.getImage();
-            Image scaledSeeb = seeb.getScaledInstance(ConnectionRoomBG.getWidth(), ConnectionRoomBG.getHeight(), Image.SCALE_SMOOTH);
-            
-            ConnectionRoomBG.setIcon(new ImageIcon(scaledSeeb));*/
-            
-            
-            ImageIcon round = new ImageIcon(getClass().getResource("/images/Carpet.jpg"));
-            Image carpet = round.getImage();
-            Image scaledCarpet = carpet.getScaledInstance(RoundBG.getWidth(), RoundBG.getHeight(), Image.SCALE_SMOOTH);
-            
-            //RoundBG.setIcon(new ImageIcon(scaledCarpet));
-            LeaderboardBG.setIcon(new ImageIcon(scaledCarpet));
-            WaitingRoomBG.setIcon(new ImageIcon(scaledCarpet));
-            ConnectionRoomBG.setIcon(new ImageIcon(scaledCarpet));
-            UsernameBG.setIcon(new ImageIcon(scaledCarpet));
-            
-            
-            
-            /*ImageIcon usernamebg = new ImageIcon(getClass().getResource("/images/Door.jpg"));
-            Image door = usernamebg.getImage();
-            Image scaledDoor = door.getScaledInstance(UsernameBG.getWidth(), UsernameBG.getHeight(), Image.SCALE_SMOOTH);
-            
-            UsernameBG.setIcon(new ImageIcon(scaledDoor));*/
-            
-            
-            
-            
-            
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading background images");
-        }
+   private void initBackgroundImages() {
+    try {
+        // Load carpet image for all backgrounds
+        ImageIcon carpetIcon = new ImageIcon(getClass().getResource("/images/Carpet.jpg"));
+        Image carpetImage = carpetIcon.getImage();
+        
+        // Scale for each panel
+        Image scaledCarpetRound = carpetImage.getScaledInstance(
+            RoundBG.getWidth() > 0 ? RoundBG.getWidth() : 1440, 
+            RoundBG.getHeight() > 0 ? RoundBG.getHeight() : 800, 
+            Image.SCALE_SMOOTH);
+        
+        // Set backgrounds for all panels
+        RoundBG.setIcon(new ImageIcon(scaledCarpetRound));
+        LeaderboardBG.setIcon(new ImageIcon(scaledCarpetRound));
+        WaitingRoomBG.setIcon(new ImageIcon(scaledCarpetRound));
+        ConnectionRoomBG.setIcon(new ImageIcon(scaledCarpetRound));
+        UsernameBG.setIcon(new ImageIcon(scaledCarpetRound));
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading background images: " + e.getMessage());
     }
+}
 
     private void sendExitMessage() {
         if (out != null) {
@@ -152,16 +136,33 @@ public class Client extends javax.swing.JFrame {
         System.out.println("hit button clicked");
     }
 
-    private void displayPrivateCard(Card card) {
-        System.out.println("Card dimensions: "
-                + card.getImage().getIconWidth() + "x"
-                + card.getImage().getIconHeight());
-        System.out.println("RoundPanel visible: " + RoundPanel.isVisible());
-
-        BackOfCardLabel.setIcon(card.getImage());
+  private void displayPrivateCard(Card card) {
+    try {
+        // Get the card image from the Card object
+        ImageIcon cardIcon = card.getImage();
+        
+        // Set the card icon
+        BackOfCardLabel.setIcon(cardIcon);
+        
+        // Make sure the label is visible and properly sized
+        BackOfCardLabel.setVisible(true);
+        BackOfCardLabel.setOpaque(true);
+        
+        // Bring the card label to the front
+        RoundPanel.setComponentZOrder(BackOfCardLabel, 0);
+        
+        // Force repaint to make sure the card appears
         BackOfCardLabel.revalidate();
         BackOfCardLabel.repaint();
+        RoundPanel.revalidate();
+        RoundPanel.repaint();
+        
+        System.out.println("Card displayed: " + card.toString() + " - Is Visible: " + BackOfCardLabel.isVisible());
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.err.println("Error displaying card: " + e.getMessage());
     }
+}
     
     /*private void displayPrivateCard(Card card) {
     try {
@@ -311,6 +312,15 @@ public class Client extends javax.swing.JFrame {
                         }*/
         });
     }
+    
+private void ensureBackgroundAtBottom() {
+    // This will send the background to the back in each panel
+    if (RoundBG != null) RoundPanel.setComponentZOrder(RoundBG, RoundPanel.getComponentCount() - 1);
+    if (LeaderboardBG != null) LeaderBoardPanel.setComponentZOrder(LeaderboardBG, LeaderBoardPanel.getComponentCount() - 1);
+    if (WaitingRoomBG != null) WaitingRoom.setComponentZOrder(WaitingRoomBG, WaitingRoom.getComponentCount() - 1);
+    if (ConnectionRoomBG != null) ConnectionRoom.setComponentZOrder(ConnectionRoomBG, ConnectionRoom.getComponentCount() - 1);
+    if (UsernameBG != null) UsernamePanel.setComponentZOrder(UsernameBG, UsernamePanel.getComponentCount() - 1);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
