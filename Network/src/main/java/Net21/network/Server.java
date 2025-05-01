@@ -128,7 +128,7 @@ public class Server {
                 if (roomTimer == null) {
                     roomTimer = new Timer();
                     roomTimer.scheduleAtFixedRate(new TimerTask() {
-                        private int countdown = 30; 
+                        private int countdown = 10; 
 
                         @Override
                         public void run() {
@@ -208,7 +208,7 @@ public class Server {
     }
 
     private static void startCountdown(CountDownLatch latch, boolean isFinalRound) {
-        final int[] countdown = {10};
+        final int[] countdown = {5};
         final ScheduledFuture<?>[] timerHolder = new ScheduledFuture<?>[1]; 
 
         timerHolder[0] = executor.scheduleAtFixedRate(() -> {
