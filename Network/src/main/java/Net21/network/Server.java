@@ -128,7 +128,7 @@ public class Server {
                 if (roomTimer == null) {
                     roomTimer = new Timer();
                     roomTimer.scheduleAtFixedRate(new TimerTask() {
-                        private int countdown = 30; 
+                        private int countdown = 10; 
 
                         @Override
                         public void run() {
