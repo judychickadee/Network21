@@ -102,7 +102,9 @@ username, connect, and join the waiting room.
   updates the Swing UI (waiting room, round panel, leaderboard).
 
 ## Authors
-
-Group 8 — Net21
+Aljawharah Alsultan
+Dana Alsalmi
+Aljudi Altorkistani 
+Shooq Alawdah
 </content>
 </invoke>
